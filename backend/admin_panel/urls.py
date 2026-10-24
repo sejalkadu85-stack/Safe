@@ -11,6 +11,10 @@ from .views import (
     AdminBroadcastView,
     AdminVerifyUserView,
     AdminAnalyticsView,
+    AdminReportsDataView,
+    AdminExportIncidentsExcelView,
+    AdminExportIncidentsCsvView,
+    AdminExportIncidentsPdfView,
 )
 
 app_name = 'admin_panel'
@@ -45,4 +49,10 @@ urlpatterns = [
 
     # REST APIs – Analytics
     path('api/analytics/', AdminAnalyticsView.as_view(), name='admin_analytics'),
+
+    # REST APIs – Reporting Dashboards & Exports
+    path('api/reports/', AdminReportsDataView.as_view(), name='admin_reports_api'),
+    path('api/reports/export/excel/', AdminExportIncidentsExcelView.as_view(), name='admin_export_excel'),
+    path('api/reports/export/csv/', AdminExportIncidentsCsvView.as_view(), name='admin_export_csv'),
+    path('api/reports/export/pdf/', AdminExportIncidentsPdfView.as_view(), name='admin_export_pdf'),
 ]

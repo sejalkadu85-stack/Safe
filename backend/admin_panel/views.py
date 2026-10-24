@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.db.models import Count, Q
 from django.contrib import messages
+from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
@@ -545,3 +546,94 @@ class AdminAnalyticsView(APIView):
             'verification_queue': {'pending': pending, 'approved': approved, 'rejected': rejected},
             'weekly_trend': weekly_trend,
         })
+
+
+class AdminReportsDataView(APIView):
+    """
+    GET /api/admin/reports/
+    Returns aggregated incident metrics, response-time analytics,
+    society density, category distributions, and filtered incident records.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        from .reports_service import get_filtered_alerts, compile_reporting_dataset
+        alerts_qs = get_filtered_alerts(request.GET)
+        report_data = compile_reporting_dataset(alerts_qs)
+        return Response(report_data)
+
+
+class AdminExportIncidentsExcelView(APIView):
+    """
+    GET /api/admin/reports/export/excel/
+    Streams a formatted multi-sheet Excel spreadsheet (.xlsx).
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        from .reports_service import get_filtered_alerts, compile_reporting_dataset, generate_excel_report
+        alerts_qs = get_filtered_alerts(request.GET)
+        report_data = compile_reporting_dataset(alerts_qs)
+        excel_buffer = generate_excel_report(report_data, request.GET)
+
+        timestamp_str = timezone.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"SafeHer_Incident_Report_{timestamp_str}.xlsx"
+
+        response = HttpResponse(
+            excel_buffer.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
+
+
+class AdminExportIncidentsCsvView(APIView):
+    """
+    GET /api/admin/reports/export/csv/
+    Streams a UTF-8 encoded CSV file with complete incident metadata.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        from .reports_service import get_filtered_alerts, compile_reporting_dataset, generate_csv_report
+        alerts_qs = get_filtered_alerts(request.GET)
+        report_data = compile_reporting_dataset(alerts_qs)
+        csv_bytes = generate_csv_report(report_data)
+
+        timestamp_str = timezone.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"SafeHer_Incident_Report_{timestamp_str}.csv"
+
+        response = HttpResponse(
+            csv_bytes,
+            content_type='text/csv; charset=utf-8'
+        )
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
+
+
+class AdminExportIncidentsPdfView(APIView):
+    """
+    GET /api/admin/reports/export/pdf/
+    Streams a branded PDF executive report in landscape format.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        from .reports_service import get_filtered_alerts, compile_reporting_dataset, generate_pdf_report
+        alerts_qs = get_filtered_alerts(request.GET)
+        report_data = compile_reporting_dataset(alerts_qs)
+        pdf_buffer = generate_pdf_report(report_data, request.GET)
+
+        timestamp_str = timezone.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"SafeHer_Incident_Report_{timestamp_str}.pdf"
+
+        # Check if 'inline' is requested
+        disposition = 'inline' if request.GET.get('view') == 'inline' else 'attachment'
+
+        response = HttpResponse(
+            pdf_buffer.getvalue(),
+            content_type='application/pdf'
+        )
+        response['Content-Disposition'] = f'{disposition}; filename="{filename}"'
+        return response
+

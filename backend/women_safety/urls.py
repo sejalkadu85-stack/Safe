@@ -29,12 +29,15 @@ from admin_panel.views import (
     AdminSOSLogsView,
     AdminDangerZonePendingView,
     AdminBroadcastView,
+    AdminReportsDataView,
+    AdminExportIncidentsExcelView,
+    AdminExportIncidentsCsvView,
+    AdminExportIncidentsPdfView,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('admin-panel/', dashboard_web_view, name='admin_dashboard_web'),
-    path('admin-panel/dashboard/', dashboard_web_view, name='admin_dashboard_web_slash'),
+    path('admin-panel/', include('admin_panel.urls')),
     
     # API Endpoints
     path('api/auth/', include('accounts.urls')),
@@ -89,6 +92,10 @@ urlpatterns = [
     path('api/admin/broadcast/', AdminBroadcastView.as_view(), name='root_admin_broadcast'),
     path('api/admin/volunteers/pending/', AdminVolunteerApprovalApiView.as_view(), name='root_admin_pending_volunteers'),
     path('api/admin/volunteers/<int:id>/verify/', AdminVolunteerApprovalApiView.as_view(), name='root_admin_verify_volunteer'),
+    path('api/admin/reports/', AdminReportsDataView.as_view(), name='root_admin_reports'),
+    path('api/admin/reports/export/excel/', AdminExportIncidentsExcelView.as_view(), name='root_admin_export_excel'),
+    path('api/admin/reports/export/csv/', AdminExportIncidentsCsvView.as_view(), name='root_admin_export_csv'),
+    path('api/admin/reports/export/pdf/', AdminExportIncidentsPdfView.as_view(), name='root_admin_export_pdf'),
 
     # Battery-Low Auto Alert (Task 5.4)
     path('api/alerts/battery-low/', BatteryLowAlertView.as_view(), name='root_battery_low_alert'),

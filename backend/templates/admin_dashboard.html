@@ -1244,6 +1244,527 @@
             .metrics-cards-row { grid-template-columns: 1fr; }
             .bottom-quad-grid { grid-template-columns: 1fr; }
         }
+
+        /* ========================================================
+           REPORTING DASHBOARD & INTELLIGENCE HUB STYLES
+        ======================================================== */
+        .reporting-hub-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .rep-header-card {
+            background: linear-gradient(135deg, rgba(14, 21, 38, 0.95), rgba(9, 14, 28, 0.95));
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 16px;
+            padding: 24px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+
+        .rep-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .rep-header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+        }
+
+        .pulsing-radar-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+            animation: pulse-ring 2s infinite ease-in-out;
+        }
+
+        .rep-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #FFFFFF 30%, #00F0FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .rep-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            max-width: 650px;
+            line-height: 1.5;
+        }
+
+        .rep-export-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .rep-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .rep-btn-excel {
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.15), rgba(0, 230, 118, 0.05));
+            border: 1px solid rgba(0, 230, 118, 0.4);
+            color: #00E676;
+            box-shadow: 0 0 12px rgba(0, 230, 118, 0.15);
+        }
+        .rep-btn-excel:hover {
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.3), rgba(0, 230, 118, 0.1));
+            color: #FFFFFF;
+            border-color: #00E676;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .rep-btn-pdf {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(0, 240, 255, 0.05));
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            color: #00F0FF;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+        }
+        .rep-btn-pdf:hover {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(0, 240, 255, 0.1));
+            color: #FFFFFF;
+            border-color: #00F0FF;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .rep-btn-csv {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+        }
+        .rep-btn-csv:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Filter Control Bar */
+        .rep-filter-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: flex-end;
+            gap: 14px;
+            flex-wrap: wrap;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .rep-filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .rep-filter-lbl {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .rep-select, .rep-input {
+            background: rgba(12, 19, 36, 0.85);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: #FFFFFF;
+            padding: 9px 12px;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .rep-select:focus, .rep-input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+        }
+
+        .rep-search-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .rep-search-wrap svg {
+            position: absolute;
+            left: 12px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .rep-search-input {
+            padding-left: 34px !important;
+            width: 100%;
+        }
+
+        .rep-filter-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .rep-btn-apply {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, var(--neon-cyan), #0088FF);
+            color: #060913;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .rep-btn-apply:hover {
+            box-shadow: 0 0 16px rgba(0, 240, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .rep-btn-reset {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            padding: 9px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .rep-btn-reset:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
+        }
+
+        /* KPI Ribbon */
+        .rep-kpi-ribbon {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .rep-kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .rep-kpi-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .rep-kpi-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rep-kpi-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .rep-kpi-icon-box {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .rep-kpi-icon-box.pink { background: var(--neon-pink-bg); }
+        .rep-kpi-icon-box.cyan { background: var(--neon-cyan-bg); }
+        .rep-kpi-icon-box.green { background: var(--neon-green-bg); }
+        .rep-kpi-icon-box.purple { background: var(--neon-purple-bg); }
+        .rep-kpi-icon-box.amber { background: var(--neon-amber-bg); }
+
+        .rep-kpi-value {
+            font-size: 22px;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            color: #FFFFFF;
+        }
+
+        .rep-kpi-sub {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .rep-progress-track {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .rep-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00E676, #00F0FF);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        /* Charts Grid */
+        .rep-charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .rep-chart-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .rep-chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rep-chart-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rep-chart-bullet {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .rep-chart-bullet.cyan { background: var(--neon-cyan); box-shadow: 0 0 6px var(--neon-cyan); }
+        .rep-chart-bullet.purple { background: var(--neon-purple); box-shadow: 0 0 6px var(--neon-purple); }
+        .rep-chart-bullet.pink { background: var(--neon-pink); box-shadow: 0 0 6px var(--neon-pink); }
+        .rep-chart-bullet.green { background: var(--neon-green); box-shadow: 0 0 6px var(--neon-green); }
+
+        .rep-chart-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .rep-chart-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.04);
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .rep-chart-canvas-box {
+            position: relative;
+            height: 230px;
+            width: 100%;
+        }
+
+        /* Table Card */
+        .rep-table-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .rep-table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .rep-table-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rep-table-count-badge {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .rep-table-responsive {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .rep-data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .rep-data-table thead th {
+            background: rgba(10, 16, 32, 0.9);
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--card-border);
+            white-space: nowrap;
+        }
+
+        .rep-data-table tbody td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .rep-data-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .rep-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .rep-status-badge.active {
+            background: var(--neon-pink-bg);
+            color: var(--neon-pink);
+            border: 1px solid rgba(255, 0, 122, 0.3);
+        }
+
+        .rep-status-badge.resolved {
+            background: var(--neon-green-bg);
+            color: var(--neon-green);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+        }
+
+        .rep-status-badge.cancelled {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rep-tier-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(139, 92, 246, 0.15);
+            color: #A78BFA;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .rep-tier-badge.tier3 {
+            background: var(--neon-amber-bg);
+            color: var(--neon-amber);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .rep-inspect-btn {
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: var(--neon-cyan);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .rep-inspect-btn:hover {
+            background: var(--neon-cyan);
+            color: #060913;
+        }
+
+        @media (max-width: 1200px) {
+            .rep-kpi-ribbon { grid-template-columns: repeat(3, 1fr); }
+            .rep-charts-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 800px) {
+            .rep-kpi-ribbon { grid-template-columns: 1fr; }
+            .rep-filter-container { flex-direction: column; align-items: stretch; }
+            .rep-filter-btn-group { margin-left: 0; justify-content: flex-end; }
+        }
     </style>
 </head>
 <body>
@@ -1351,9 +1872,9 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#reports-section" onclick="scrollToSection('bottom-charts-section')">
+                    <a href="#reporting-hub-section" onclick="scrollToSection('reporting-hub-section')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                        Reports
+                        Reporting & Analytics
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -1847,6 +2368,252 @@
                         <span style="display:flex; align-items:center; gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#00F0FF;"></span> Low</span>
                         <span style="display:flex; align-items:center; gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#FF8C00;"></span> Moderate</span>
                         <span style="display:flex; align-items:center; gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#FF007A;"></span> Peak Hazard</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================
+               REPORTING DASHBOARD & ADMIN PORTAL ANALYTICS HUB
+               Full analytics, society-wise density reports, response-time metrics,
+               multi-dimension filters, interactive charts, and export to PDF/Excel/CSV.
+            ======================================================== -->
+            <section class="reporting-hub-section" id="reporting-hub-section">
+                <!-- Header with Title & Export Actions -->
+                <div class="rep-header-card">
+                    <div class="rep-header-left">
+                        <div class="rep-header-badge">
+                            <span class="pulsing-radar-dot"></span>
+                            <span>INTELLIGENCE &amp; OPERATIONS COMMAND</span>
+                        </div>
+                        <h2 class="rep-title">Reporting &amp; Analytics Intelligence Hub</h2>
+                        <p class="rep-subtitle">Cross-platform incident statistics, responder response-time telemetry, society hotspot density, and exportable audit records.</p>
+                    </div>
+                    <div class="rep-export-actions">
+                        <a href="javascript:void(0)" onclick="exportReport('excel')" class="rep-btn rep-btn-excel" title="Download formatted Excel workbook">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                            <span>Export Excel</span>
+                        </a>
+                        <a href="javascript:void(0)" onclick="exportReport('pdf')" class="rep-btn rep-btn-pdf" title="Download executive PDF report">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                            <span>Download PDF</span>
+                        </a>
+                        <a href="javascript:void(0)" onclick="exportReport('csv')" class="rep-btn rep-btn-csv" title="Download raw CSV data">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <span>Export CSV</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Filter Control Bar -->
+                <div class="rep-filter-container">
+                    <div class="rep-filter-group">
+                        <label class="rep-filter-lbl">Time Horizon</label>
+                        <select id="repFilterPreset" class="rep-select" onchange="handlePresetChange(this.value)">
+                            <option value="all">All Time History</option>
+                            <option value="7d">Last 7 Days</option>
+                            <option value="14d">Last 14 Days</option>
+                            <option value="30d">Last 30 Days</option>
+                            <option value="this_month">This Month</option>
+                            <option value="custom">Custom Date Range...</option>
+                        </select>
+                    </div>
+
+                    <div class="rep-filter-group" id="repCustomDateGroup" style="display:none;">
+                        <label class="rep-filter-lbl">Custom Date Range</label>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <input type="date" id="repFilterStartDate" class="rep-input rep-date-input" title="Start Date">
+                            <span style="color:var(--text-muted); font-size:12px;">to</span>
+                            <input type="date" id="repFilterEndDate" class="rep-input rep-date-input" title="End Date">
+                        </div>
+                    </div>
+
+                    <div class="rep-filter-group">
+                        <label class="rep-filter-lbl">Threat Category</label>
+                        <select id="repFilterCategory" class="rep-select">
+                            <option value="all">All Categories</option>
+                            <option value="harassment">Harassment</option>
+                            <option value="stalking">Stalking</option>
+                            <option value="medical">Medical Emergency</option>
+                            <option value="accident">Accident</option>
+                            <option value="unsafe_situation">Unsafe Situation</option>
+                            <option value="other">Other / General</option>
+                        </select>
+                    </div>
+
+                    <div class="rep-filter-group">
+                        <label class="rep-filter-lbl">Incident Status</label>
+                        <select id="repFilterStatus" class="rep-select">
+                            <option value="all">All Statuses</option>
+                            <option value="active">Active (Needs Help)</option>
+                            <option value="resolved">Resolved (Safe)</option>
+                            <option value="cancelled">Cancelled (False Alarm)</option>
+                        </select>
+                    </div>
+
+                    <div class="rep-filter-group" style="flex: 1; min-width: 200px;">
+                        <label class="rep-filter-lbl">Society / Locality Search</label>
+                        <div class="rep-search-wrap">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" id="repFilterSociety" class="rep-input rep-search-input" placeholder="e.g. Bellandur, Green Glen, Block B...">
+                        </div>
+                    </div>
+
+                    <div class="rep-filter-btn-group">
+                        <button type="button" onclick="loadReportingData()" class="rep-btn-apply">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            Apply Filters
+                        </button>
+                        <button type="button" onclick="resetReportingFilters()" class="rep-btn-reset" title="Reset all filters">
+                            &#x21BA; Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Executive KPI Metrics Ribbon -->
+                <div class="rep-kpi-ribbon">
+                    <div class="rep-kpi-card">
+                        <div class="rep-kpi-top">
+                            <span class="rep-kpi-label">TOTAL INCIDENTS</span>
+                            <span class="rep-kpi-icon-box pink">&#x1F6A8;</span>
+                        </div>
+                        <div class="rep-kpi-value" id="kpiRepTotal">0</div>
+                        <div class="rep-kpi-sub" id="kpiRepBreakdown">0 Active &bull; 0 Resolved</div>
+                    </div>
+
+                    <div class="rep-kpi-card">
+                        <div class="rep-kpi-top">
+                            <span class="rep-kpi-label">RESOLUTION RATE</span>
+                            <span class="rep-kpi-icon-box green">&#x1F3AF;</span>
+                        </div>
+                        <div class="rep-kpi-value" id="kpiRepResolutionRate">0.0%</div>
+                        <div class="rep-progress-track">
+                            <div class="rep-progress-fill" id="kpiRepProgressFill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="rep-kpi-card">
+                        <div class="rep-kpi-top">
+                            <span class="rep-kpi-label">AVG RESPONSE TIME</span>
+                            <span class="rep-kpi-icon-box cyan">&#x23F1;&#xFE0F;</span>
+                        </div>
+                        <div class="rep-kpi-value" id="kpiRepAvgResp">0.0 min</div>
+                        <div class="rep-kpi-sub" id="kpiRepFastest">Fastest: 0.0 min</div>
+                    </div>
+
+                    <div class="rep-kpi-card">
+                        <div class="rep-kpi-top">
+                            <span class="rep-kpi-label">AVG RESOLUTION TIME</span>
+                            <span class="rep-kpi-icon-box purple">&#x1F6E1;&#xFE0F;</span>
+                        </div>
+                        <div class="rep-kpi-value" id="kpiRepAvgResol">0.0 min</div>
+                        <div class="rep-kpi-sub">From trigger to safe close</div>
+                    </div>
+
+                    <div class="rep-kpi-card">
+                        <div class="rep-kpi-top">
+                            <span class="rep-kpi-label">TIER-3 ESCALATIONS</span>
+                            <span class="rep-kpi-icon-box amber">&#x26A0;&#xFE0F;</span>
+                        </div>
+                        <div class="rep-kpi-value" id="kpiRepTier3">0</div>
+                        <div class="rep-kpi-sub">High severity broadcasts</div>
+                    </div>
+                </div>
+
+                <!-- Analytics Charts Grid (4 Interactive Charts) -->
+                <div class="rep-charts-grid">
+                    <!-- Chart 1: Society / Locality Density -->
+                    <div class="rep-chart-card">
+                        <div class="rep-chart-header">
+                            <div class="rep-chart-title-wrap">
+                                <span class="rep-chart-bullet cyan"></span>
+                                <h3 class="rep-chart-title">Society / Locality Incident Density</h3>
+                            </div>
+                            <span class="rep-chart-tag">Top Hotspots</span>
+                        </div>
+                        <div class="rep-chart-canvas-box">
+                            <canvas id="repSocietyChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: Response-Time Analytics by Category -->
+                    <div class="rep-chart-card">
+                        <div class="rep-chart-header">
+                            <div class="rep-chart-title-wrap">
+                                <span class="rep-chart-bullet purple"></span>
+                                <h3 class="rep-chart-title">Response-Time Analytics by Category</h3>
+                            </div>
+                            <span class="rep-chart-tag">Average Minutes</span>
+                        </div>
+                        <div class="rep-chart-canvas-box">
+                            <canvas id="repResponseTimeChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 3: Incident Category Share -->
+                    <div class="rep-chart-card">
+                        <div class="rep-chart-header">
+                            <div class="rep-chart-title-wrap">
+                                <span class="rep-chart-bullet pink"></span>
+                                <h3 class="rep-chart-title">Incident Category Distribution</h3>
+                            </div>
+                            <span class="rep-chart-tag">Threat Breakdown</span>
+                        </div>
+                        <div class="rep-chart-canvas-box">
+                            <canvas id="repCategoryChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 4: Hourly Distribution / Peak Danger Hours -->
+                    <div class="rep-chart-card">
+                        <div class="rep-chart-header">
+                            <div class="rep-chart-title-wrap">
+                                <span class="rep-chart-bullet green"></span>
+                                <h3 class="rep-chart-title">24-Hour Incident Heatmap</h3>
+                            </div>
+                            <span class="rep-chart-tag">Hourly Telemetry</span>
+                        </div>
+                        <div class="rep-chart-canvas-box">
+                            <canvas id="repHourlyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtered Incidents Data Table -->
+                <div class="rep-table-card">
+                    <div class="rep-table-header">
+                        <div class="rep-table-title-wrap">
+                            <h3 class="rep-chart-title">Filtered Incident Dispatch &amp; Response Records</h3>
+                            <span class="rep-table-count-badge" id="repTableCountBadge">0 incidents</span>
+                        </div>
+                        <div style="font-size:12px; color:var(--text-muted);" id="repFilterStatusText">Showing all matching records</div>
+                    </div>
+
+                    <div class="rep-table-responsive">
+                        <table class="rep-data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Reported At</th>
+                                    <th>Victim / User</th>
+                                    <th>Society / Locality</th>
+                                    <th>Category</th>
+                                    <th>Tier</th>
+                                    <th>Status</th>
+                                    <th>Assigned Responder</th>
+                                    <th>Response Time</th>
+                                    <th>Resolution Time</th>
+                                    <th style="text-align:center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="repTableBody">
+                                <tr>
+                                    <td colspan="11" style="text-align:center; padding: 36px; color:var(--text-muted);">
+                                        <div style="font-size:24px; margin-bottom:8px;">&#x23F3;</div>
+                                        Loading reporting telemetry...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
@@ -2791,6 +3558,378 @@
                 }
             });
         })();
+
+        // ========================================================
+        // REPORTING DASHBOARD & ANALYTICS CLIENT LOGIC
+        // ========================================================
+        let repSocietyChartInstance = null;
+        let repResponseTimeChartInstance = null;
+        let repCategoryChartInstance = null;
+        let repHourlyChartInstance = null;
+
+        function handlePresetChange(val) {
+            const customGroup = document.getElementById('repCustomDateGroup');
+            if (val === 'custom') {
+                customGroup.style.display = 'flex';
+            } else {
+                customGroup.style.display = 'none';
+                loadReportingData();
+            }
+        }
+
+        function getReportingFilterParams() {
+            const preset = document.getElementById('repFilterPreset').value;
+            const category = document.getElementById('repFilterCategory').value;
+            const status = document.getElementById('repFilterStatus').value;
+            const society = document.getElementById('repFilterSociety').value.trim();
+            const startDate = document.getElementById('repFilterStartDate').value;
+            const endDate = document.getElementById('repFilterEndDate').value;
+
+            const params = new URLSearchParams();
+            if (preset) params.append('preset', preset);
+            if (category && category !== 'all') params.append('category', category);
+            if (status && status !== 'all') params.append('status', status);
+            if (society) params.append('society', society);
+            if (preset === 'custom') {
+                if (startDate) params.append('start_date', startDate);
+                if (endDate) params.append('end_date', endDate);
+            }
+            return params;
+        }
+
+        function exportReport(format) {
+            const params = getReportingFilterParams();
+            const exportUrl = `/admin-panel/api/reports/export/${format}/?` + params.toString();
+            window.location.href = exportUrl;
+        }
+
+        function resetReportingFilters() {
+            document.getElementById('repFilterPreset').value = 'all';
+            document.getElementById('repFilterCategory').value = 'all';
+            document.getElementById('repFilterStatus').value = 'all';
+            document.getElementById('repFilterSociety').value = '';
+            document.getElementById('repFilterStartDate').value = '';
+            document.getElementById('repFilterEndDate').value = '';
+            document.getElementById('repCustomDateGroup').style.display = 'none';
+            loadReportingData();
+        }
+
+        async function loadReportingData() {
+            const params = getReportingFilterParams();
+            const url = '/admin-panel/api/reports/?' + params.toString();
+
+            const tbody = document.getElementById('repTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="11" style="text-align:center; padding: 36px; color:var(--text-muted);">
+                        <div style="font-size:24px; margin-bottom:8px;">⏳</div>
+                        Refreshing analytics &amp; records...
+                    </td>
+                </tr>
+            `;
+
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                renderReportingDashboard(data);
+            } catch (err) {
+                console.error("Failed to load reporting data:", err);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="11" style="text-align:center; padding: 24px; color:#FF4444;">
+                            Failed to load reports. Error: ${err.message}
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function renderReportingDashboard(data) {
+            const summary = data.summary || {};
+
+            // 1. Update KPIs
+            document.getElementById('kpiRepTotal').innerText = summary.total_incidents || 0;
+            document.getElementById('kpiRepBreakdown').innerText = 
+                `${summary.active_incidents || 0} Active • ${summary.resolved_incidents || 0} Resolved`;
+            
+            const resRate = summary.resolution_rate || 0;
+            document.getElementById('kpiRepResolutionRate').innerText = `${resRate}%`;
+            document.getElementById('kpiRepProgressFill').style.width = `${Math.min(resRate, 100)}%`;
+
+            document.getElementById('kpiRepAvgResp').innerText = `${summary.avg_response_time_minutes || 0} min`;
+            document.getElementById('kpiRepFastest').innerText = `Fastest: ${summary.fastest_response_minutes || 0} min`;
+
+            document.getElementById('kpiRepAvgResol').innerText = `${summary.avg_resolution_time_minutes || 0} min`;
+            document.getElementById('kpiRepTier3').innerText = summary.escalated_tier3 || 0;
+
+            // 2. Render Charts
+            renderSocietyChart(data.society_stats || []);
+            renderResponseTimeChart(data.category_stats || []);
+            renderCategoryChart(data.category_stats || []);
+            renderHourlyChart(data.hourly_distribution || []);
+
+            // 3. Render Table
+            renderIncidentsTable(data.incidents || []);
+        }
+
+        function renderSocietyChart(societyStats) {
+            const ctx = document.getElementById('repSocietyChart').getContext('2d');
+            if (repSocietyChartInstance) repSocietyChartInstance.destroy();
+
+            const topSoc = societyStats.slice(0, 6);
+            const labels = topSoc.map(s => s.society);
+            const totalData = topSoc.map(s => s.total);
+            const resolvedData = topSoc.map(s => s.resolved);
+
+            if (labels.length === 0) {
+                labels.push('No recorded areas');
+                totalData.push(0);
+                resolvedData.push(0);
+            }
+
+            repSocietyChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Total Alerts',
+                            data: totalData,
+                            backgroundColor: 'rgba(0, 240, 255, 0.7)',
+                            borderColor: '#00F0FF',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Resolved',
+                            data: resolvedData,
+                            backgroundColor: 'rgba(0, 230, 118, 0.7)',
+                            borderColor: '#00E676',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#94A3B8', font: { size: 10 } }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#94A3B8', font: { size: 10 }, precision: 0 }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: '#FFFFFF', font: { size: 11, weight: 'bold' } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderResponseTimeChart(categoryStats) {
+            const ctx = document.getElementById('repResponseTimeChart').getContext('2d');
+            if (repResponseTimeChartInstance) repResponseTimeChartInstance.destroy();
+
+            const labels = categoryStats.map(c => c.category);
+            const times = categoryStats.map(c => c.avg_response_time);
+
+            if (labels.length === 0) {
+                labels.push('No incident data');
+                times.push(0);
+            }
+
+            repResponseTimeChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Avg Response Time (min)',
+                        data: times,
+                        backgroundColor: 'rgba(139, 92, 246, 0.65)',
+                        borderColor: '#8B5CF6',
+                        borderWidth: 1,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#94A3B8', font: { size: 10 } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#94A3B8', font: { size: 10 } },
+                            title: { display: true, text: 'Minutes', color: '#64748B', font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderCategoryChart(categoryStats) {
+            const ctx = document.getElementById('repCategoryChart').getContext('2d');
+            if (repCategoryChartInstance) repCategoryChartInstance.destroy();
+
+            const labels = categoryStats.map(c => c.category);
+            const totals = categoryStats.map(c => c.total);
+
+            const palette = [
+                '#FF007A', '#00F0FF', '#8B5CF6', '#00E676', '#F59E0B', '#3B82F6', '#EC4899', '#64748B'
+            ];
+
+            if (labels.length === 0) {
+                labels.push('No Incidents');
+                totals.push(1);
+            }
+
+            repCategoryChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: totals,
+                        backgroundColor: palette.slice(0, labels.length),
+                        borderColor: '#0A0F1D',
+                        borderWidth: 2,
+                        hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { color: '#94A3B8', font: { size: 10 }, boxWidth: 12 }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        function renderHourlyChart(hourlyDistribution) {
+            const ctx = document.getElementById('repHourlyChart').getContext('2d');
+            if (repHourlyChartInstance) repHourlyChartInstance.destroy();
+
+            const labels = Array.from({ length: 24 }, (_, i) => {
+                const h = i % 12 || 12;
+                const ampm = i < 12 ? 'AM' : 'PM';
+                return `${h}${ampm}`;
+            });
+
+            repHourlyChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Incidents',
+                        data: hourlyDistribution,
+                        backgroundColor: hourlyDistribution.map(val => val > 0 ? '#00E676' : 'rgba(255,255,255,0.05)'),
+                        borderRadius: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#64748B',
+                                font: { size: 9 },
+                                callback: function(val, idx) {
+                                    return idx % 4 === 0 ? labels[idx] : '';
+                                }
+                            }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#64748B', font: { size: 9 }, precision: 0 }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderIncidentsTable(incidents) {
+            const tbody = document.getElementById('repTableBody');
+            const badge = document.getElementById('repTableCountBadge');
+            badge.innerText = `${incidents.length} incident${incidents.length === 1 ? '' : 's'}`;
+
+            if (incidents.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="11" style="text-align:center; padding: 36px; color:var(--text-muted);">
+                            <div style="font-size:20px; margin-bottom:6px;">✨</div>
+                            No incidents matching the selected criteria.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let html = '';
+            incidents.forEach(inc => {
+                const st = inc.status.toLowerCase();
+                const stClass = st === 'active' ? 'active' : (st === 'resolved' ? 'resolved' : 'cancelled');
+                const tierClass = inc.escalation_tier.includes('3') ? 'rep-tier-badge tier3' : 'rep-tier-badge';
+                const respTimeStr = inc.response_time_min !== null ? `${inc.response_time_min} min` : '—';
+                const resolTimeStr = inc.resolution_time_min !== null ? `${inc.resolution_time_min} min` : (st === 'active' ? 'In Progress' : '—');
+
+                html += `
+                    <tr>
+                        <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--neon-cyan);">#${inc.id}</td>
+                        <td style="color:var(--text-secondary);">${inc.created_at_human}</td>
+                        <td>
+                            <div style="font-weight:700; color:#FFFFFF;">${escapeHtml(inc.sender_name)}</div>
+                            <div style="font-size:11px; color:var(--text-muted);">${escapeHtml(inc.sender_phone)}</div>
+                        </td>
+                        <td style="color:#FFFFFF; font-weight:600;">${escapeHtml(inc.society)}</td>
+                        <td>${escapeHtml(inc.category)}</td>
+                        <td><span class="${tierClass}">${inc.escalation_tier}</span></td>
+                        <td><span class="rep-status-badge ${stClass}">${inc.status}</span></td>
+                        <td style="color:var(--text-secondary);">${escapeHtml(inc.responder_name)}</td>
+                        <td style="font-family:'JetBrains Mono',monospace; color:var(--neon-cyan);">${respTimeStr}</td>
+                        <td style="font-family:'JetBrains Mono',monospace; color:var(--neon-green);">${resolTimeStr}</td>
+                        <td style="text-align:center;">
+                            <button class="rep-inspect-btn" onclick="viewIncidentDetail(${inc.id}, '${escapeHtml(inc.sender_name)}', '${escapeHtml(inc.address)}', '${inc.created_at_human}', 'High', '${inc.status}', ${inc.latitude || 0}, ${inc.longitude || 0}, 85)">
+                                Inspect
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        // Initialize Reporting Hub on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadReportingData();
+        });
+
 
     </script>
 </body>
