@@ -1,4 +1,4 @@
-# 🛡️ SafeHer — Intelligent Women Safety & Emergency Response Ecosystem
+# SafeHer — Intelligent Women Safety & Emergency Response Ecosystem
 
 ![Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/Language-Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
@@ -11,37 +11,37 @@
 
 ## 🌟 Key Features
 
-### 1. 🚨 3-Tier Progressive Emergency Escalation
+### 1.  3-Tier Progressive Emergency Escalation
 * **Tier 1 (Primary Guardian)**: Immediately dispatches a direct cellular phone call, GPS tracking SMS, email, and push notification to the user's primary emergency contact.
 * **Tier 2 (Secondary Circle & Friends)**: Automatically activates if the primary contact does not respond within a timed escalation window (45–60s).
 * **Tier 3 (Verified Community Volunteers)**: Broadcasts a localized distress mission to background-verified community volunteers located near the victim's live coordinates.
 
-### 2. 🛡️ Accidental Click Defense System
+### 2.  Accidental Click Defense System
 * **5-Second Countdown Buffer**: Prevents false alarms from pocket touches or accidental taps with haptic pulse vibrations and an instant one-tap **Cancel SOS** option.
 * **"I Am Safe" False Alarm Resolution**: If an alert is triggered accidentally, the user can resolve it with one tap, immediately notifying contacts and halting volunteer dispatch.
 
-### 3. 🪪 Volunteer ID Proof Verification Gate
+### 3. Volunteer ID Proof Verification Gate
 * **Role-Based Gating**: Women and guardians register and receive immediate, friction-free access to safety tools.
 * **Vetting for Responders**: Community volunteers must upload a valid government ID proof (Aadhaar, Driving License, Voter ID, or Passport). Their accounts are gated with `pending` status until reviewed and approved by an admin in the Web Portal.
 
-### 4. 📞 Offline-First Helpline Directory
+### 4.  Offline-First Helpline Directory
 * Built-in verified national helpline numbers (`112`, `1091`, `181`, `100`, `108`, `1930`, `1098`) accessible **even without internet or cellular data**.
 * One-tap calling via native Android dialer without memory strain during panic.
 
-### 5. 📊 Real-Time Admin Analytics & Triage Dashboard
+### 5. Real-Time Admin Analytics & Triage Dashboard
 * Live Web Dashboard featuring interactive **Chart.js** data visualizations:
   * **Incident Status Donut Chart**: Breakdown of Active, Resolved, and Cancelled incidents.
   * **User Roles Bar Chart**: Distribution of Women, Guardians, Volunteers, and Admins.
   * **Peak Risk Hours Bar Histogram**: 24-hour incident distribution with intensity-coded hazard levels.
 * Triage queue for pending volunteer ID document inspection, approval, and rejection.
 
-### 6. 🎙️ Digital Evidence Vault & Incident Chat
+### 6.  Digital Evidence Vault & Incident Chat
 * Captures encrypted background audio recordings during distress for legal investigation.
 * Provides a synchronized multi-party emergency chat room connecting the victim, guardians, and assigned volunteer.
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ```mermaid
 flowchart TD
@@ -61,7 +61,7 @@ flowchart TD
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Mobile App (Android)**: Kotlin, Jetpack (ViewBinding, Coroutines, Lifecycle), Retrofit 2, OkHttp 3, Google Play Services Location, Google Maps SDK, Material Design 3.
 * **Backend (Server)**: Python 3.12+, Django 5+, Django REST Framework, SimpleJWT, Daphne ASGI (WebSockets), SQLite / PostgreSQL.
@@ -70,7 +70,7 @@ flowchart TD
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 * **Android Studio** Hedgehog or newer (JDK 17+)
@@ -132,7 +132,7 @@ flowchart TD
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 SafeHer/
@@ -161,13 +161,10 @@ SafeHer/
 
 ---
 
-## 🔒 Security & Privacy
+##  Security & Privacy
 
 * **Zero Hardcoded Credentials**: All passwords, API tokens, and secret keys are stored exclusively in environment variables.
 * **Strict Ownership Validation**: SOS alerts can only deliver notifications to contacts explicitly authorized and saved by the authenticated user.
 * **Accidental Click Protection**: 5-second cancel buffer ensures user privacy and prevents emergency false alarms.
 
----
 
-## 📄 License
-This project is licensed under the MIT License — see the LICENSE file for details.
