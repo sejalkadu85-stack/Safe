@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_background_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Main Scrollable Content Area -->
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!-- TAB 1: HOME DASHBOARD -->
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/tabHomeView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="30dp">
+
+                    <!-- Top Bar: Avatar, Greeting & Online Switch -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="18dp">
+
+                        <ImageView
+                            android:id="@+id/ivVolAvatar"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_role_volunteer"
+                            android:background="@drawable/bg_dark_card"
+                            android:padding="6dp"
+                            android:contentDescription="Volunteer" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:id="@+id/tvVolGreeting"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hero Volunteer"
+                                android:textColor="@color/white"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvVolBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Verified Responder 🛡️ · Tier 1"
+                                android:textColor="@color/neon_cyan"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!-- Online / Offline Toggle Switch Container -->
+                        <LinearLayout
+                            android:id="@+id/btnDutyToggle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/bg_dark_card"
+                            android:paddingHorizontal="12dp"
+                            android:clickable="true"
+                            android:focusable="true">
+
+                            <View
+                                android:id="@+id/viewDutyDot"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_dot_active"
+                                android:layout_marginEnd="6dp" />
+
+                            <TextView
+                                android:id="@+id/tvDutyStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ONLINE"
+                                android:textColor="@color/neon_green"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Active Radar Status Card -->
+                    <LinearLayout
+                        android:id="@+id/cardRadarStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_dark_card"
+                        android:padding="16dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="18dp">
+
+                        <ProgressBar
+                            android:id="@+id/pbRadar"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:indeterminate="true"
+                            android:indeterminateTint="@color/neon_cyan"
+                            android:layout_marginEnd="14dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Emergency Scanner Active"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Listening for SOS distress signals within 5 km"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- ACTIVE ASSISTANCE MISSION CARD (Visible when an SOS is in progress) -->
+                    <LinearLayout
+                        android:id="@+id/cardActiveMission"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_dark_card"
+                        android:padding="16dp"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:layout_marginBottom="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="🚨 ACTIVE MISSION IN PROGRESS"
+                                android:textColor="@color/neon_pink"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvActiveStepBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="On the Way"
+                                android:textColor="@color/neon_cyan"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:background="@drawable/bg_status_pill"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="3dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvActiveMissionVictim"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Assisting: Priya Sharma (420m away)"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvActiveMissionLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📍 Green Valley Society, Block B, Flat 302"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp"
+                            android:layout_marginTop="2dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnResumeActiveMission"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:text="Open Mission &amp; Navigation →"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:backgroundTint="@color/neon_pink"
+                            app:cornerRadius="12dp"
+                            android:layout_marginTop="12dp" />
+                    </LinearLayout>
+
+                    <!-- 3 IMPACT STATS -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="20dp">
+
+                        <!-- Rating -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_dark_card"
+                            android:padding="12dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rating"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                android:id="@+id/tvStatRating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="4.9 ★"
+                                android:textColor="@color/neon_orange"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp" />
+                        </LinearLayout>
+
+                        <!-- Helps Completed -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_dark_card"
+                            android:padding="12dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:layout_marginHorizontal="3dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Assists"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                android:id="@+id/tvStatHelps"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="38"
+                                android:textColor="@color/neon_cyan"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp" />
+                        </LinearLayout>
+
+                        <!-- Response Time -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_dark_card"
+                            android:padding="12dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:layout_marginStart="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Avg Time"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="3.2 min"
+                                android:textColor="@color/neon_green"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Section Header: Nearby Urgent Requests -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🚨 Nearby Urgent Requests"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvNearbyBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3 Nearby"
+                            android:textColor="@color/neon_pink"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/bg_status_pill"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="3dp" />
+                    </LinearLayout>
+
+                    <!-- Nearby Requests List (Populated dynamically) -->
+                    <LinearLayout
+                        android:id="@+id/llNearbyRequestsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!-- Dynamic Cards -->
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <!-- TAB 2: INCIDENTS DIRECTORY (ASSIGNED & HISTORY) -->
+            <LinearLayout
+                android:id="@+id/tabIncidentsView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Incident Management"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Filter Chips -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/chipFilterAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="All Nearby (3)"
+                            android:textColor="@color/white"
+                            android:background="@drawable/bg_tab_active"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="8dp"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="8dp" />
+
+                        <TextView
+                            android:id="@+id/chipFilterAssigned"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Assigned to Me"
+                            android:textColor="@color/text_secondary"
+                            android:background="@drawable/bg_tab_inactive"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="8dp"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="8dp" />
+
+                        <TextView
+                            android:id="@+id/chipFilterHistory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="History (38)"
+                            android:textColor="@color/text_secondary"
+                            android:background="@drawable/bg_tab_inactive"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="8dp"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/llAllIncidentsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!-- Populated dynamically -->
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+
+            <!-- TAB 3: RADAR MAP SCREEN -->
+            <LinearLayout
+                android:id="@+id/tabMapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Live Emergency Radar Map"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Visualizing your position and real-time distress pins"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Mock Map Container with Glowing Circles -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_dark_card">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:src="@drawable/ic_location_pin"
+                            app:tint="@color/neon_pink"
+                            android:contentDescription="Map Pin" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Live GPS Coordinates: 18.5204° N, 73.8567° E"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2 Distress signals active in your 5 km patrol grid"
+                            android:textColor="@color/neon_cyan"
+                            android:textSize="11sp"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <!-- Google Maps Button Bottom Right -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnOpenNavigationMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:text="🗺️ Open in Google Maps Navigation"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:backgroundTint="#0088FF"
+                        app:cornerRadius="22dp" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <!-- TAB 4: CHAT WITH USER -->
+            <LinearLayout
+                android:id="@+id/tabChatView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Direct Emergency Chat"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Encrypted channel with requester &amp; local dispatch"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Chat Messages Scroll Area -->
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/llChatMessages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- System Message -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="🔒 Emergency Session Initiated · Audio &amp; GPS logs verified"
+                            android:textColor="@color/text_muted"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="12dp" />
+
+                        <!-- Victim Message -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_dark_card"
+                            android:padding="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Priya Sharma (Distress User)"
+                                android:textColor="@color/neon_pink"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Please hurry! Someone is following me near the society gate."
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:layout_marginTop="2dp" />
+                        </LinearLayout>
+
+                        <!-- Volunteer Message -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:background="@drawable/bg_status_pill"
+                            android:padding="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="You (Responder)"
+                                android:textColor="@color/neon_cyan"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="I am on my way! Approximately 3 minutes away. Stay near the lights."
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:layout_marginTop="2dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </ScrollView>
+
+                <!-- Quick Response Chips -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginBottom="10dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/chipQuickMsg1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🚗 I'm 2 mins away!"
+                            android:textColor="@color/neon_cyan"
+                            android:background="@drawable/bg_dark_card"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="6dp"
+                            android:textSize="11sp"
+                            android:layout_marginEnd="6dp" />
+                        <TextView
+                            android:id="@+id/chipQuickMsg2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📍 Stay where you are"
+                            android:textColor="@color/neon_cyan"
+                            android:background="@drawable/bg_dark_card"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="6dp"
+                            android:textSize="11sp"
+                            android:layout_marginEnd="6dp" />
+                        <TextView
+                            android:id="@+id/chipQuickMsg3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📞 Call 112 Dispatch"
+                            android:textColor="@color/neon_pink"
+                            android:background="@drawable/bg_dark_card"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="6dp"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- Input Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/etChatMessage"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_dark_card"
+                        android:hint="Type emergency message..."
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/text_muted"
+                        android:paddingHorizontal="14dp"
+                        android:textSize="13sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnSendChat"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@color/neon_pink"
+                        android:src="@drawable/ic_send_neon"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="Send" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- TAB 5: VOLUNTEER PROFILE & SETTINGS -->
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/tabProfileView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Profile Header Card -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_dark_card"
+                        android:padding="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="20dp">
+
+                        <ImageView
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:src="@drawable/ic_role_volunteer"
+                            android:background="@drawable/bg_dot_active"
+                            android:padding="8dp"
+                            android:contentDescription="Avatar" />
+
+                        <TextView
+                            android:id="@+id/tvProfileName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hero Volunteer"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Badge #VOL-8492 · Verified Police Partner"
+                            android:textColor="@color/neon_cyan"
+                            android:textSize="11sp"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+
+                    <!-- Skills & Credentials -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CERTIFIED CAPABILITIES"
+                        android:textColor="@color/text_muted"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_dark_card"
+                        android:padding="16dp"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✔ First Aid &amp; CPR Certified (Red Cross)"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            android:layout_marginBottom="6dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✔ Self Defense Trained Responder"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            android:layout_marginBottom="6dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✔ Verified Police Department ID Card"
+                            android:textColor="@color/white"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <!-- Settings List -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PREFERENCES &amp; DISPATCH"
+                        android:textColor="@color/text_muted"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_dark_card"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="24dp">
+
+                        <!-- Patrol Radius -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="16dp">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Patrol Radar Radius"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="5.0 km"
+                                android:textColor="@color/neon_cyan"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Switch to Standard User View -->
+                        <LinearLayout
+                            android:id="@+id/btnProfileSwitchUserView"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="16dp"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Switch to Personal SOS Mode"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="›"
+                                android:textColor="@color/text_muted"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Logout Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnVolLogout"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="🚪 Log Out of Volunteer Account"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:backgroundTint="#B70928"
+                        app:cornerRadius="12dp" />
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </FrameLayout>
+
+        <!-- 5-ITEM BOTTOM NAVIGATION BAR -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/volBottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/card_background"
+            app:itemIconTint="@color/selector_nav_color"
+            app:itemTextColor="@color/selector_nav_color"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/volunteer_bottom_nav_menu" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

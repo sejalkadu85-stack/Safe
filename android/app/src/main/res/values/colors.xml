@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SafeHer Dark Theme Base Colors -->
+    <color name="screen_background">#0A0E21</color>
+    <color name="screen_background_dark">#060814</color>
+    <color name="card_background">#121832</color>
+    <color name="card_background_elevated">#171F3F</color>
+    <color name="card_stroke">#1F294D</color>
+    <color name="card_stroke_active">#FF2D7A</color>
+    
+    <!-- Input Fields -->
+    <color name="input_background">#0E142C</color>
+    <color name="input_border">#1F294D</color>
+    <color name="input_border_focused">#FF2D7A</color>
+
+    <!-- Neon Brand Accents -->
+    <color name="primary">#FF2D7A</color>
+    <color name="neon_pink">#FF2D7A</color>
+    <color name="primary_dark">#C70054</color>
+    <color name="primary_light">#FF5E9E</color>
+    <color name="primary_variant">#FF1475</color>
+    
+    <color name="neon_cyan">#00E5FF</color>
+    <color name="neon_cyan_dark">#00B0FF</color>
+    <color name="neon_cyan_glow">#3300E5FF</color>
+
+    <color name="neon_green">#00E676</color>
+    <color name="neon_green_glow">#3300E676</color>
+
+    <color name="neon_purple">#9D4EDD</color>
+    <color name="neon_orange">#FF9100</color>
+
+    <!-- Emergency SOS Crimson & Radial Glow -->
+    <color name="sos_red">#FF2D55</color>
+    <color name="sos_red_dark">#B70928</color>
+    <color name="sos_pulse_ring_outer">#20FF2D55</color>
+    <color name="sos_pulse_ring_mid">#40FF2D55</color>
+    <color name="sos_pulse_ring_inner">#80FF2D55</color>
+    <color name="sos_coral_start">#FF2D7A</color>
+    <color name="sos_coral_end">#C70039</color>
+    <color name="sos_red_light">#26FF2D55</color>
+
+    <!-- Typography -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#8F9BB3</color>
+    <color name="text_muted">#5D6882</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Navigation -->
+    <color name="nav_background">#0A0E21</color>
+    <color name="nav_active">#FF2D7A</color>
+    <color name="nav_inactive">#6C7896</color>
+
+    <!-- Role Badges (Reference bottom legend) -->
+    <color name="role_user_bg">#2A1836</color>
+    <color name="role_user_accent">#FF2D7A</color>
+    <color name="role_guardian_bg">#14244B</color>
+    <color name="role_guardian_accent">#00B0FF</color>
+    <color name="role_friend_bg">#113133</color>
+    <color name="role_friend_accent">#00E676</color>
+    <color name="role_volunteer_bg">#362816</color>
+    <color name="role_volunteer_accent">#FF9100</color>
+    <color name="role_responder_bg">#271940</color>
+    <color name="role_responder_accent">#9D4EDD</color>
+
+    <!-- Compatibility aliases -->
+    <color name="auth_bg_start">#0A0E21</color>
+    <color name="auth_bg_center">#0D1330</color>
+    <color name="auth_bg_end">#060814</color>
+    <color name="home_background">#0A0E21</color>
+    <color name="role_admin_bg">#271940</color>
+    <color name="role_admin_accent">#9D4EDD</color>
+    <color name="tool_location_green">#00E676</color>
+    <color name="tool_location_bg">#113133</color>
+    <color name="tool_tools_purple">#9D4EDD</color>
+    <color name="tool_tools_bg">#271940</color>
+    <color name="tool_community_green">#00E676</color>
+    <color name="tool_community_bg">#113133</color>
+    <color name="tool_helpline_red">#FF2D55</color>
+    <color name="tool_helpline_bg">#361522</color>
+</resources>

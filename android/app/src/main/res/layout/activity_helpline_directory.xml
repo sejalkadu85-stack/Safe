@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/screen_background">
+
+    <!-- Top App Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="14dp"
+        android:background="@color/card_background">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/text_primary"
+            android:contentDescription="Back" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emergency Helplines"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24x7 Immediate Emergency Dialing"
+                android:textColor="@color/neon_pink"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnQuickDial112"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_dark_card"
+            android:src="@drawable/ic_call"
+            app:tint="@color/neon_green"
+            android:contentDescription="Quick Dial 112" />
+
+    </LinearLayout>
+
+    <!-- Search Input -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="Search police, ambulance, 1091..."
+            android:textColorHint="@color/text_muted"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:paddingHorizontal="16dp"
+            android:drawableStart="@drawable/ic_phone_neon"
+            android:drawablePadding="10dp"
+            android:imeOptions="actionSearch"
+            android:inputType="text" />
+    </FrameLayout>
+
+    <!-- Category Chips Horizontal Scroll -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="16dp">
+
+        <LinearLayout
+            android:id="@+id/chipsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/chipAll"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:text="All (10)"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_role_chip_selected"
+                android:paddingHorizontal="14dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipWomen"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:text="Women Safety 👩"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:background="@drawable/bg_role_chip_unselected"
+                android:paddingHorizontal="14dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipPolice"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:text="Police 🚓"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:background="@drawable/bg_role_chip_unselected"
+                android:paddingHorizontal="14dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipMedical"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:text="Medical 🚑"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:background="@drawable/bg_role_chip_unselected"
+                android:paddingHorizontal="14dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipCyber"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:text="Cyber 💻"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:background="@drawable/bg_role_chip_unselected"
+                android:paddingHorizontal="14dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/chipChild"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:text="Childline 👶"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:background="@drawable/bg_role_chip_unselected"
+                android:paddingHorizontal="14dp" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Progress Indicator -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:visibility="gone" />
+
+    <!-- RecyclerView for Helplines -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHelplines"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="24dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>

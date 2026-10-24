@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Network Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Location Permissions for Live Tracking and SOS -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- Emergency Calling & SMS -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <!-- Device Sensors & Audio -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <application
+        android:name=".WomenSafetyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.WomenSafety"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".ui.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.WomenSafety.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.auth.OnboardingActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true" />
+
+
+        <activity
+            android:name=".ui.auth.RoleSelectionActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.auth.SignUpActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.auth.OtpVerificationActivity"
+            android:exported="true" />
+
+        <!-- Contacts Management Activity -->
+        <activity
+            android:name=".ui.contacts.TrustedContactsActivity"
+            android:exported="true" />
+
+        <!-- Live Location & Tracking Activity -->
+        <activity
+            android:name=".ui.location.LiveTrackingActivity"
+            android:exported="true" />
+
+        <!-- SOS Trigger Flow Activities -->
+        <activity
+            android:name=".ui.alerts.SosCountdownActivity"
+            android:exported="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true" />
+
+        <activity
+            android:name=".ui.alerts.AlertSentActivity"
+            android:exported="true" />
+
+
+        <!-- Emergency Numbers -->
+        <activity
+            android:name=".ui.alerts.EmergencyNumbersActivity"
+            android:exported="true" />
+
+        <!-- Alert History -->
+        <activity
+            android:name=".ui.alerts.AlertHistoryActivity"
+            android:exported="true" />
+
+        <!-- Chat / Communication -->
+        <activity
+            android:name=".ui.chat.ConversationListActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.chat.ChatActivity"
+            android:exported="true" />
+
+        <!-- Safety Tips -->
+        <activity
+            android:name=".ui.alerts.SafetyTipsActivity"
+            android:exported="true" />
+
+        <!-- How SafeHer Works -->
+        <activity
+            android:name=".ui.alerts.HowItWorksActivity"
+            android:exported="true" />
+
+        <!-- Notification Settings -->
+        <activity
+            android:name=".ui.NotificationSettingsActivity"
+            android:exported="true" />
+
+        <!-- Firebase Cloud Messaging Service -->
+        <service
+            android:name=".services.SafetyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Background Shake Detector Service -->
+        <service
+            android:name=".services.ShakeDetectorService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Emergency shake detection for personal safety" />
+        </service>
+
+        <!-- Phase 4: AI Safety Monitor Service -->
+        <service
+            android:name=".services.AiSafetyMonitorService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Sensory analysis and distress sound detection for personal safety" />
+        </service>
+
+        <!-- Phase 4 Activities -->
+        <activity
+            android:name=".ui.AiSafetyMonitorActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.SafeJourneyActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.StealthDisguiseActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.FakeCallActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.FakeIncomingCallActivity"
+            android:exported="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true" />
+
+        <activity
+            android:name=".ui.DangerZoneHeatmapActivity"
+            android:exported="true" />
+
+        <!-- Phase 5: Community & Helpline Activities -->
+        <activity
+            android:name=".ui.HelplineDirectoryActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.VolunteerNetworkActivity"
+            android:exported="true" />
+
+        <!-- Task 5.8: Profile Screen -->
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="true" />
+
+        <!-- Admin Dashboard Screen -->
+        <activity
+            android:name=".ui.admin.AdminDashboardActivity"
+            android:exported="true" />
+
+        <!-- Volunteer Responder Module -->
+        <activity
+            android:name=".ui.volunteer.VolunteerDashboardActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.volunteer.ActiveAssistanceActivity"
+            android:exported="true" />
+
+        <!-- Guardian & Friend Safety Shield Dashboard -->
+        <activity
+            android:name=".ui.guardian.GuardianDashboardActivity"
+            android:exported="true" />
+
+        <!-- 3-Way Emergency Incident Chat -->
+        <activity
+            android:name=".ui.chat.IncidentChatActivity"
+            android:exported="true" />
+
+
+        <!-- Task 5.4: Battery-Low Auto Alert Receiver -->
+        <receiver
+            android:name=".services.BatteryLowReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+
+</manifest>

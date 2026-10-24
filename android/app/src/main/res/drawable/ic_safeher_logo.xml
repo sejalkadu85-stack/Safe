@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Outer Neon Cyan Shield -->
+    <path
+        android:pathData="M60,10 L98,24 C98,62 82,92 60,110 C38,92 22,62 22,24 Z"
+        android:strokeWidth="4"
+        android:strokeColor="#00E5FF"
+        android:fillColor="#0D1636" />
+
+    <!-- Inner Shield Border Accent -->
+    <path
+        android:pathData="M60,18 L90,29 C90,60 76,86 60,101 C44,86 30,60 30,29 Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="#254378"
+        android:fillColor="#111B40" />
+
+    <!-- Woman Profile Silhouette in Magenta/Pink with Ponytail -->
+    <!-- Head and Face Silhouette -->
+    <path
+        android:pathData="M56,36 C52,36 47,40 46,45 C45,49 46,52 48,54 C48,56 46,59 47,61 C49,63 51,63 53,64 C54,67 56,71 60,74 C62,75 64,75 64,78 C64,83 67,88 72,90 C69,82 66,77 64,72 C66,69 67,65 67,61 C67,52 64,44 58,38 Z"
+        android:fillColor="#FF2D7A" />
+
+    <!-- Flowing Ponytail / Hair Wave -->
+    <path
+        android:pathData="M56,36 C64,36 74,40 76,50 C78,59 71,68 68,75 C72,67 76,57 73,48 C71,43 65,39 56,36 Z"
+        android:fillColor="#FF5E9E" />
+
+    <!-- Ponytail Base / Curl -->
+    <path
+        android:pathData="M54,42 C51,37 45,41 45,46 C45,49 48,51 51,49 C54,47 54,44 54,42 Z"
+        android:fillColor="#E00065" />
+</vector>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Women Safety</string>
+    <string name="tagline">Your Safety Our Priority</string>
+    <string name="sub_tagline">AI-Powered Women Safety System with Real-Time Emergency Detection and Community Response</string>
+    <string name="get_started">Get Started</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login_to_continue">Login to continue your account</string>
+    <string name="who_are_you">Who are you?</string>
+    <string name="select_role">Select your role to continue</string>
+    <string name="emergency_sos">Emergency SOS</string>
+    <string name="tap_sos">Tap to send alert to your trusted contacts</string>
+</resources>
