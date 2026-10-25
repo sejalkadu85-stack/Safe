@@ -8,9 +8,10 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 
 from accounts.models import CustomUser
-from alerts.models import SOSAlert, EvidenceFile
+from alerts.models import SOSAlert, EvidenceFile, IncidentTimeline
 from location.models import DangerZone, Journey
 from community.models import Volunteer, VolunteerRequest, Helpline
+from notifications.models import Notification
 
 
 def dashboard_web_view(request):
@@ -134,6 +135,7 @@ def dashboard_web_view(request):
     # Role Breakdown
     user_role_count = CustomUser.objects.filter(role='woman').count()
     guardian_role_count = CustomUser.objects.filter(role='guardian').count()
+    friend_role_count = CustomUser.objects.filter(role='friend').count()
     volunteer_role_count = CustomUser.objects.filter(role='volunteer').count()
     admin_role_count = CustomUser.objects.filter(role='admin').count()
 
@@ -166,6 +168,91 @@ def dashboard_web_view(request):
     for a in hourly_raw:
         hourly_data[a.created_at.hour] += 1
 
+    # Real data for Map (Active SOS Alerts)
+    alerts_for_map = []
+    active_alerts_qs = SOSAlert.objects.filter(status='active').select_related('sender')
+    for a in active_alerts_qs:
+        if a.latitude is not None and a.longitude is not None:
+            alerts_for_map.append({
+                'id': a.id,
+                'title': a.address or f"Incident #{a.id}",
+                'user': a.sender.get_full_name() or a.sender.username,
+                'status': a.get_status_display() if hasattr(a, 'get_status_display') else a.status,
+                'color': '#FF007A',
+                'lat': float(a.latitude),
+                'lng': float(a.longitude),
+                'time': a.created_at.strftime('%I:%M %p'),
+                'battery': f"{a.battery_level or 100}%"
+            })
+    alerts_map_data_json = json.dumps(alerts_for_map)
+
+    # Real Audit Activity (from IncidentTimeline, Registrations, and Alerts)
+    real_activity = []
+    for tl in IncidentTimeline.objects.select_related('alert', 'actor').order_by('-timestamp')[:10]:
+        real_activity.append({
+            'title': f"Incident #{tl.alert_id} ({tl.status.upper()})",
+            'description': tl.note or f"Updated by {tl.actor_name}",
+            'time': tl.timestamp,
+            'type': 'incident'
+        })
+    for u in CustomUser.objects.order_by('-date_joined')[:10]:
+        real_activity.append({
+            'title': f"User registered: {u.get_full_name() or u.username}",
+            'description': f"Role: {u.get_role_display()}",
+            'time': u.date_joined,
+            'type': 'user'
+        })
+    for a in SOSAlert.objects.select_related('sender').order_by('-created_at')[:10]:
+        real_activity.append({
+            'title': f"SOS Alert #{a.id} ({a.get_status_display()})",
+            'description': f"Triggered by {a.sender.get_full_name() or a.sender.username} - {a.address or 'Location coordinates logged'}",
+            'time': a.created_at,
+            'type': 'alert'
+        })
+    real_activity.sort(key=lambda x: x['time'], reverse=True)
+    real_activity = real_activity[:10]
+
+    # Real In-App Notifications
+    real_notifications = Notification.objects.select_related('recipient').order_by('-created_at')[:10]
+    unread_notifications_count = Notification.objects.filter(is_read=False).count()
+
+    # Verified Volunteers for responder dispatch dropdown
+    verified_volunteers_list = Volunteer.objects.filter(is_verified=True).select_related('user')
+
+    # Real Trends Over Time (7, 14, 30 days)
+    today = now.date()
+    days_7_labels = []
+    days_7_total = []
+    days_7_resolved = []
+    for i in range(6, -1, -1):
+        d = today - timedelta(days=i)
+        days_7_labels.append(d.strftime('%b %d'))
+        days_7_total.append(SOSAlert.objects.filter(created_at__date=d).count())
+        days_7_resolved.append(SOSAlert.objects.filter(created_at__date=d, status='resolved').count())
+
+    days_14_labels = []
+    days_14_total = []
+    days_14_resolved = []
+    for i in range(13, -1, -2):
+        d = today - timedelta(days=i)
+        days_14_labels.append(d.strftime('%b %d'))
+        days_14_total.append(SOSAlert.objects.filter(created_at__date=d).count())
+        days_14_resolved.append(SOSAlert.objects.filter(created_at__date=d, status='resolved').count())
+
+    days_30_labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+    days_30_total = [
+        SOSAlert.objects.filter(created_at__gte=now - timedelta(days=28), created_at__lt=now - timedelta(days=21)).count(),
+        SOSAlert.objects.filter(created_at__gte=now - timedelta(days=21), created_at__lt=now - timedelta(days=14)).count(),
+        SOSAlert.objects.filter(created_at__gte=now - timedelta(days=14), created_at__lt=now - timedelta(days=7)).count(),
+        SOSAlert.objects.filter(created_at__gte=now - timedelta(days=7)).count(),
+    ]
+    days_30_resolved = [
+        SOSAlert.objects.filter(status='resolved', created_at__gte=now - timedelta(days=28), created_at__lt=now - timedelta(days=21)).count(),
+        SOSAlert.objects.filter(status='resolved', created_at__gte=now - timedelta(days=21), created_at__lt=now - timedelta(days=14)).count(),
+        SOSAlert.objects.filter(status='resolved', created_at__gte=now - timedelta(days=14), created_at__lt=now - timedelta(days=7)).count(),
+        SOSAlert.objects.filter(status='resolved', created_at__gte=now - timedelta(days=7)).count(),
+    ]
+
     # Querysets for Tables
     recent_alerts = SOSAlert.objects.select_related('sender').order_by('-created_at')[:20]
     pending_danger_zones = DangerZone.objects.select_related('reported_by').order_by('-created_at')[:15]
@@ -186,6 +273,7 @@ def dashboard_web_view(request):
         'total_evidence_files': total_evidence_files,
         'user_role_count': user_role_count,
         'guardian_role_count': guardian_role_count,
+        'friend_role_count': friend_role_count,
         'volunteer_role_count': volunteer_role_count,
         'admin_role_count': admin_role_count,
         'recent_alerts': recent_alerts,
@@ -193,6 +281,10 @@ def dashboard_web_view(request):
         'volunteers': all_volunteers,
         'all_users': all_users,
         'helplines': helplines,
+        'verified_volunteers_list': verified_volunteers_list,
+        'real_activity': real_activity,
+        'real_notifications': real_notifications,
+        'unread_notifications_count': unread_notifications_count,
         # Verification Queue
         'pending_verification_users': pending_verification_users,
         'pending_verification_count': pending_verification_count,
@@ -204,10 +296,21 @@ def dashboard_web_view(request):
         'cancelled_count_json': cancelled_alerts_count,
         'user_role_json': user_role_count,
         'guardian_role_json': guardian_role_count,
+        'friend_role_json': friend_role_count,
         'volunteer_role_json': volunteer_role_count,
         'admin_role_json': admin_role_count,
         'alert_categories_json': json.dumps(alert_categories),
         'hourly_data_json': json.dumps(hourly_data),
+        'alerts_map_data_json': alerts_map_data_json,
+        'trend_7_labels_json': json.dumps(days_7_labels),
+        'trend_7_total_json': json.dumps(days_7_total),
+        'trend_7_resolved_json': json.dumps(days_7_resolved),
+        'trend_14_labels_json': json.dumps(days_14_labels),
+        'trend_14_total_json': json.dumps(days_14_total),
+        'trend_14_resolved_json': json.dumps(days_14_resolved),
+        'trend_30_labels_json': json.dumps(days_30_labels),
+        'trend_30_total_json': json.dumps(days_30_total),
+        'trend_30_resolved_json': json.dumps(days_30_resolved),
     }
     return render(request, 'admin_dashboard.html', context)
 

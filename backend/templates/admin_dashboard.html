@@ -1821,7 +1821,7 @@
             <!-- Notification Bell with Count -->
             <div class="notif-badge-btn" onclick="openNotificationDrawer()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                <div class="notif-counter">5</div>
+                <div class="notif-counter">{{ unread_notifications_count|default:0 }}</div>
             </div>
 
             <!-- Admin Profile -->
@@ -1856,7 +1856,7 @@
                     <a href="#incidents-section" onclick="scrollToSection('incidents-section')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                         Live Incidents
-                        <span class="sidebar-badge">7</span>
+                        <span class="sidebar-badge">{{ active_alerts_count|default:0 }}</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -1929,11 +1929,11 @@
                         </div>
                         <div>
                             <div class="stat-title-label">Total Users</div>
-                            <div class="stat-main-number">{{ total_users|default:"1,248" }}</div>
+                            <div class="stat-main-number">{{ total_users }}</div>
                         </div>
                     </div>
                     <div class="stat-growth-tag up">
-                        ↑ 12% <span class="period">vs. last 7 days</span>
+                        <span class="period">Registered & Verified</span>
                     </div>
                 </div>
 
@@ -1945,11 +1945,11 @@
                         </div>
                         <div>
                             <div class="stat-title-label">Active Alerts</div>
-                            <div class="stat-main-number">{{ active_alerts_count|default:"7" }}</div>
+                            <div class="stat-main-number">{{ active_alerts_count }}</div>
                         </div>
                     </div>
                     <div class="stat-growth-tag up">
-                        ↑ 3% <span class="period">vs. last 7 days</span>
+                        <span class="period">Live SOS Broadcasts</span>
                     </div>
                 </div>
 
@@ -1961,11 +1961,11 @@
                         </div>
                         <div>
                             <div class="stat-title-label">Resolved Alerts</div>
-                            <div class="stat-main-number">{{ resolved_alerts_count|default:"89" }}</div>
+                            <div class="stat-main-number">{{ resolved_alerts_count }}</div>
                         </div>
                     </div>
                     <div class="stat-growth-tag up">
-                        ↑ 18% <span class="period">vs. last 7 days</span>
+                        <span class="period">Safely Resolved</span>
                     </div>
                 </div>
 
@@ -1977,11 +1977,11 @@
                         </div>
                         <div>
                             <div class="stat-title-label">Volunteers / Responders</div>
-                            <div class="stat-main-number">{{ total_volunteers|default:"56" }}</div>
+                            <div class="stat-main-number">{{ total_volunteers }}</div>
                         </div>
                     </div>
                     <div class="stat-growth-tag up">
-                        ↑ 9% <span class="period">vs. last 7 days</span>
+                        <span class="period">Active Responders</span>
                     </div>
                 </div>
             </section>
@@ -1999,7 +1999,7 @@
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                             </div>
                             <div class="panel-header-title">Live Emergency Incidents</div>
-                            <div class="active-pill-badge">7 Active</div>
+                            <div class="active-pill-badge">{{ active_alerts_count }} Active</div>
                         </div>
                         <a href="javascript:void(0)" class="view-all-link" onclick="openIncidentsFullModal()">
                             View All →
@@ -2019,161 +2019,45 @@
                                 </tr>
                             </thead>
                             <tbody id="incidentsTableBody">
-                                <!-- Row 1 -->
+                                {% for alert in recent_alerts %}
                                 <tr>
-                                    <td>1</td>
-                                    <td><span class="status-pill open">Open</span></td>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>
+                                        <span class="status-pill {{ alert.status|lower }}">{{ alert.get_status_display }}</span>
+                                    </td>
                                     <td>
                                         <div class="loc-cell">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                             <div>
-                                                <div class="loc-text-main">Green Valley Society</div>
-                                                <div class="loc-text-sub">Block B, Flat 302</div>
+                                                <div class="loc-text-main">{{ alert.address|default:"Live GPS Pin"|truncatechars:35 }}</div>
+                                                <div class="loc-text-sub">Lat: {{ alert.latitude|default:"—" }} · Lng: {{ alert.longitude|default:"—" }}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="time-cell-main">10:42 AM</div>
-                                        <div class="time-cell-sub">(12 min ago)</div>
+                                        <div class="time-cell-main">{{ alert.created_at|date:"h:i A" }}</div>
+                                        <div class="time-cell-sub">({{ alert.created_at|timesince }} ago)</div>
                                     </td>
-                                    <td><span class="priority-pill high">High</span></td>
+                                    <td>
+                                        <span class="priority-pill {% if alert.status == 'active' %}high{% elif alert.status == 'resolved' %}low{% else %}medium{% endif %}">
+                                            {{ alert.get_category_display|default:"Emergency" }}
+                                        </span>
+                                    </td>
                                     <td>
                                         <div class="action-btns-wrap">
-                                            <button class="btn-view-incident" onclick="viewIncidentDetail(1, 'Priya Sharma', 'Green Valley Society, Block B, Flat 302', '10:42 AM', 'High', 'Open', '18.5204', '73.8567', '94%')">View</button>
-                                            <button class="btn-icon-more">···</button>
+                                            <button class="btn-view-incident" onclick="viewIncidentDetail('{{ alert.id }}', '{{ alert.sender.get_full_name|default:alert.sender.username|escapejs }}', '{{ alert.address|default:'Emergency Location'|escapejs }}', '{{ alert.created_at|date:'h:i A' }}', 'High', '{{ alert.status|title }}', '{{ alert.latitude|default:'0' }}', '{{ alert.longitude|default:'0' }}', '{{ alert.battery_level|default:'100' }}%')">View</button>
                                         </div>
                                     </td>
                                 </tr>
-
-                                <!-- Row 2 -->
+                                {% empty %}
                                 <tr>
-                                    <td>2</td>
-                                    <td><span class="status-pill active">Active</span></td>
-                                    <td>
-                                        <div class="loc-cell">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                            <div>
-                                                <div class="loc-text-main">Riverside Apartments</div>
-                                                <div class="loc-text-sub">Tower 3, Flat 1204</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="time-cell-main">09:58 AM</div>
-                                        <div class="time-cell-sub">(1 hr ago)</div>
-                                    </td>
-                                    <td><span class="priority-pill high">High</span></td>
-                                    <td>
-                                        <div class="action-btns-wrap">
-                                            <button class="btn-view-incident" onclick="viewIncidentDetail(2, 'Ananya Sen', 'Riverside Apartments, Tower 3', '09:58 AM', 'High', 'Active', '18.5312', '73.8445', '78%')">View</button>
-                                            <button class="btn-icon-more">···</button>
-                                        </div>
+                                    <td colspan="6" style="text-align:center; padding: 40px 20px; color:var(--text-muted);">
+                                        <div style="font-size:28px; margin-bottom:8px;">🛡️</div>
+                                        <div style="font-weight:600; color:#FFF; font-size:14px; margin-bottom:4px;">No Active Emergency Incidents</div>
+                                        <div style="font-size:12px;">All zones are currently clear. Real-time SOS triggers will immediately appear here.</div>
                                     </td>
                                 </tr>
-
-                                <!-- Row 3 -->
-                                <tr>
-                                    <td>3</td>
-                                    <td><span class="status-pill open">Open</span></td>
-                                    <td>
-                                        <div class="loc-cell">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                            <div>
-                                                <div class="loc-text-main">City Park</div>
-                                                <div class="loc-text-sub">Main Gate</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="time-cell-main">09:32 AM</div>
-                                        <div class="time-cell-sub">(1 hr 26 min ago)</div>
-                                    </td>
-                                    <td><span class="priority-pill medium">Medium</span></td>
-                                    <td>
-                                        <div class="action-btns-wrap">
-                                            <button class="btn-view-incident" onclick="viewIncidentDetail(3, 'Rashmi Joshi', 'City Park Main Gate', '09:32 AM', 'Medium', 'Open', '18.5150', '73.8500', '65%')">View</button>
-                                            <button class="btn-icon-more">···</button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 4 -->
-                                <tr>
-                                    <td>4</td>
-                                    <td><span class="status-pill active">Active</span></td>
-                                    <td>
-                                        <div class="loc-cell">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                            <div>
-                                                <div class="loc-text-main">Sunrise Residency</div>
-                                                <div class="loc-text-sub">Block C, Flat 101</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="time-cell-main">08:17 AM</div>
-                                        <div class="time-cell-sub">(2 hr 41 min ago)</div>
-                                    </td>
-                                    <td><span class="priority-pill high">High</span></td>
-                                    <td>
-                                        <div class="action-btns-wrap">
-                                            <button class="btn-view-incident" onclick="viewIncidentDetail(4, 'Sneha Roy', 'Sunrise Residency, Block C, Flat 101', '08:17 AM', 'High', 'Active', '18.5420', '73.8620', '82%')">View</button>
-                                            <button class="btn-icon-more">···</button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 5 -->
-                                <tr>
-                                    <td>5</td>
-                                    <td><span class="status-pill resolved">Resolved</span></td>
-                                    <td>
-                                        <div class="loc-cell">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                            <div>
-                                                <div class="loc-text-main">MG Road</div>
-                                                <div class="loc-text-sub">Near Bus Stop</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="time-cell-main">07:22 AM</div>
-                                        <div class="time-cell-sub">(3 hr 36 min ago)</div>
-                                    </td>
-                                    <td><span class="priority-pill low">Low</span></td>
-                                    <td>
-                                        <div class="action-btns-wrap">
-                                            <button class="btn-view-incident" onclick="viewIncidentDetail(5, 'Kavita Menon', 'MG Road, Near Bus Stop', '07:22 AM', 'Low', 'Resolved', '18.5080', '73.8750', '90%')">View</button>
-                                            <button class="btn-icon-more">···</button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 6 -->
-                                <tr>
-                                    <td>6</td>
-                                    <td><span class="status-pill resolved">Resolved</span></td>
-                                    <td>
-                                        <div class="loc-cell">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                            <div>
-                                                <div class="loc-text-main">Lake View Society</div>
-                                                <div class="loc-text-sub">Block A, Flat 405</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="time-cell-main">06:45 AM</div>
-                                        <div class="time-cell-sub">(4 hr 13 min ago)</div>
-                                    </td>
-                                    <td><span class="priority-pill medium">Medium</span></td>
-                                    <td>
-                                        <div class="action-btns-wrap">
-                                            <button class="btn-view-incident" onclick="viewIncidentDetail(6, 'Ritu Verma', 'Lake View Society, Block A, Flat 405', '06:45 AM', 'Medium', 'Resolved', '18.5290', '73.8820', '95%')">View</button>
-                                            <button class="btn-icon-more">···</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -2200,8 +2084,8 @@
                         <div class="map-floating-badge">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--neon-cyan)" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                             <div>
-                                <span style="font-size:10px; color:var(--text-muted); display:block; line-height:1;">Current Incidents</span>
-                                <span>7 active in your area</span>
+                                <span style="font-size:10px; color:var(--text-muted); display:block; line-height:1;">Live Geofence Radar</span>
+                                <span>{{ active_alerts_count }} active in database</span>
                             </div>
                         </div>
                     </div>
@@ -2647,7 +2531,7 @@
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                             </div>
                             <div class="role-title-lbl">User</div>
-                            <div class="role-count-num">{{ user_role_count|default:"892" }}</div>
+                            <div class="role-count-num">{{ user_role_count }}</div>
                             <div class="role-arrow-btn">→</div>
                         </div>
 
@@ -2657,7 +2541,7 @@
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
                             </div>
                             <div class="role-title-lbl">Parent</div>
-                            <div class="role-count-num">{{ guardian_role_count|default:"176" }}</div>
+                            <div class="role-count-num">{{ guardian_role_count }}</div>
                             <div class="role-arrow-btn">→</div>
                         </div>
 
@@ -2667,7 +2551,7 @@
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><circle cx="19" cy="11" r="2"/></svg>
                             </div>
                             <div class="role-title-lbl">Friend</div>
-                            <div class="role-count-num">98</div>
+                            <div class="role-count-num">{{ friend_role_count }}</div>
                             <div class="role-arrow-btn">→</div>
                         </div>
 
@@ -2677,17 +2561,17 @@
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                             </div>
                             <div class="role-title-lbl">Volunteer</div>
-                            <div class="role-count-num">{{ volunteer_role_count|default:"56" }}</div>
+                            <div class="role-count-num">{{ volunteer_role_count }}</div>
                             <div class="role-arrow-btn">→</div>
                         </div>
 
-                        <!-- Responder -->
-                        <div class="role-pill-col" onclick="filterUsersByRole('responder')">
+                        <!-- Admin -->
+                        <div class="role-pill-col" onclick="filterUsersByRole('admin')">
                             <div class="role-icon-circle resp-purple">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                             </div>
-                            <div class="role-title-lbl">Responder</div>
-                            <div class="role-count-num">26</div>
+                            <div class="role-title-lbl">Admin</div>
+                            <div class="role-count-num">{{ admin_role_count }}</div>
                             <div class="role-arrow-btn">→</div>
                         </div>
                     </div>
@@ -2706,41 +2590,21 @@
                     </div>
 
                     <ul class="activity-timeline-list">
+                        {% for act in real_activity %}
                         <li class="activity-item">
-                            <div class="activity-item-icon blue">👤</div>
-                            <div class="activity-desc">
-                                <strong>New user registered</strong> – Priya Sharma (User)
+                            <div class="activity-item-icon {% if act.type == 'alert' %}pink{% elif act.type == 'user' %}blue{% else %}green{% endif %}">
+                                {% if act.type == 'alert' %}⚠️{% elif act.type == 'user' %}👤{% else %}📋{% endif %}
                             </div>
-                            <div class="activity-time-tag">2 min ago</div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-item-icon pink">⚠️</div>
                             <div class="activity-desc">
-                                <strong>Incident status updated</strong> – #2487 (Active)
+                                <strong>{{ act.title }}</strong> – {{ act.description }}
                             </div>
-                            <div class="activity-time-tag">8 min ago</div>
+                            <div class="activity-time-tag">{{ act.time|timesince }} ago</div>
                         </li>
-                        <li class="activity-item">
-                            <div class="activity-item-icon blue">🤝</div>
-                            <div class="activity-desc">
-                                <strong>Volunteer joined</strong> – Neha Patil
-                            </div>
-                            <div class="activity-time-tag">12 min ago</div>
+                        {% empty %}
+                        <li class="activity-item" style="justify-content:center; padding:24px; color:var(--text-muted); font-size:12px;">
+                            No recent activity recorded in database.
                         </li>
-                        <li class="activity-item">
-                            <div class="activity-item-icon green">✅</div>
-                            <div class="activity-desc">
-                                <strong>Alert resolved</strong> – #2463
-                            </div>
-                            <div class="activity-time-tag">28 min ago</div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-item-icon blue">🛡️</div>
-                            <div class="activity-desc">
-                                <strong>New parent added</strong> – Rahul Deshmukh
-                            </div>
-                            <div class="activity-time-tag">32 min ago</div>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
 
@@ -2757,41 +2621,19 @@
                     </div>
 
                     <ul class="notif-card-list">
+                        {% for notif in real_notifications %}
                         <li class="notif-card-item">
-                            <div class="notif-dot-glow pink"></div>
+                            <div class="notif-dot-glow {% if notif.notification_type == 'sos_alert' %}pink{% elif notif.notification_type == 'check_in' %}green{% else %}blue{% endif %}"></div>
                             <div class="notif-item-content">
-                                <span class="highlight">New high priority alert</span> at Green Valley Society, Block B, Flat 302
-                                <span class="notif-time-ago">12 min ago</span>
+                                <span class="highlight">{{ notif.title }}</span>: {{ notif.body|truncatechars:70 }}
+                                <span class="notif-time-ago">{{ notif.created_at|timesince }} ago</span>
                             </div>
                         </li>
-                        <li class="notif-card-item">
-                            <div class="notif-dot-glow blue"></div>
-                            <div class="notif-item-content">
-                                Incident <span class="highlight">#2487</span> status changed to Active
-                                <span class="notif-time-ago">18 min ago</span>
-                            </div>
+                        {% empty %}
+                        <li class="notif-card-item" style="justify-content:center; padding:24px; color:var(--text-muted); font-size:12px;">
+                            No system notifications at this time.
                         </li>
-                        <li class="notif-card-item">
-                            <div class="notif-dot-glow green"></div>
-                            <div class="notif-item-content">
-                                New volunteer registration: <span class="highlight">Neha Patil</span>
-                                <span class="notif-time-ago">25 min ago</span>
-                            </div>
-                        </li>
-                        <li class="notif-card-item">
-                            <div class="notif-dot-glow green"></div>
-                            <div class="notif-item-content">
-                                Incident <span class="highlight">#2463</span> resolved successfully
-                                <span class="notif-time-ago">32 min ago</span>
-                            </div>
-                        </li>
-                        <li class="notif-card-item">
-                            <div class="notif-dot-glow blue"></div>
-                            <div class="notif-item-content">
-                                System backup completed
-                                <span class="notif-time-ago">1 hr ago</span>
-                            </div>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
 
@@ -2874,7 +2716,7 @@
             <div class="modal-header">
                 <div class="modal-title-h3">
                     <span style="color:var(--neon-pink);">⚠️</span>
-                    <span id="modalIncidentTitle">Incident #1 Details</span>
+                    <span id="modalIncidentTitle">Incident Inspection</span>
                 </div>
                 <button class="modal-close-btn" onclick="closeModal('incidentModal')">&times;</button>
             </div>
@@ -2882,31 +2724,31 @@
             <div class="detail-grid">
                 <div class="detail-field">
                     <div class="detail-field-lbl">Reported By / User</div>
-                    <div class="detail-field-val" id="modalUserName">Priya Sharma</div>
+                    <div class="detail-field-val" id="modalUserName">—</div>
                 </div>
                 <div class="detail-field">
                     <div class="detail-field-lbl">Current Status</div>
-                    <div class="detail-field-val" id="modalStatusBadge"><span class="status-pill open">Open</span></div>
+                    <div class="detail-field-val" id="modalStatusBadge"><span class="status-pill open">—</span></div>
                 </div>
                 <div class="detail-field">
                     <div class="detail-field-lbl">Timestamp</div>
-                    <div class="detail-field-val" id="modalTimestamp">10:42 AM (12 min ago)</div>
+                    <div class="detail-field-val" id="modalTimestamp">—</div>
                 </div>
                 <div class="detail-field">
                     <div class="detail-field-lbl">Priority Level</div>
-                    <div class="detail-field-val" id="modalPriorityBadge"><span class="priority-pill high">High Priority</span></div>
+                    <div class="detail-field-val" id="modalPriorityBadge"><span class="priority-pill high">—</span></div>
                 </div>
                 <div class="detail-field" style="grid-column: span 2;">
                     <div class="detail-field-lbl">GPS Location / Coordinates</div>
-                    <div class="detail-field-val" id="modalAddress">Green Valley Society, Block B, Flat 302</div>
-                    <div style="font-size:11px; color:var(--neon-cyan); margin-top:4px;" id="modalCoords">Lat: 18.5204 · Lng: 73.8567 · Battery: 94%</div>
+                    <div class="detail-field-val" id="modalAddress">—</div>
+                    <div style="font-size:11px; color:var(--neon-cyan); margin-top:4px;" id="modalCoords">Live GPS Coordinates</div>
                 </div>
             </div>
 
             <!-- Action Controls Form -->
             <form method="POST" action="/admin-panel/dashboard/" id="incidentActionForm">
                 {% csrf_token %}
-                <input type="hidden" name="target_id" id="formIncidentId" value="1">
+                <input type="hidden" name="target_id" id="formIncidentId" value="">
                 <input type="hidden" name="action" id="formActionType" value="resolve_sos">
 
                 <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; margin-bottom:16px;">
@@ -2914,10 +2756,12 @@
                         Assign Emergency Responder / Unit:
                     </label>
                     <select name="responder_name" style="width:100%; background:#10192e; border:1px solid rgba(0,240,255,0.3); color:#FFF; padding:10px 14px; border-radius:8px; outline:none;">
-                        <option value="Unit 4 - PCR Fast Response">🚓 PCR Unit 4 (Near Shivaji Nagar, 1.2 km away)</option>
-                        <option value="Volunteer Neha Patil">🤝 Volunteer Neha Patil (Verified Responder, 450m away)</option>
-                        <option value="Ambulance Emergency 108">🚑 108 Emergency Ambulance (Dispatched)</option>
-                        <option value="Women Helpline Unit 1091">🛡️ Women Safety Special Cell</option>
+                        <option value="PCR Emergency Patrol">🚓 Police PCR Fast Response Unit</option>
+                        <option value="Ambulance Emergency 108">🚑 108 Emergency Ambulance</option>
+                        <option value="Women Safety Special Cell 1091">🛡️ Women Safety Special Cell (1091)</option>
+                        {% for v in verified_volunteers_list %}
+                        <option value="Volunteer {{ v.user.get_full_name|default:v.user.username }}">🤝 Volunteer {{ v.user.get_full_name|default:v.user.username }} (Verified)</option>
+                        {% endfor %}
                     </select>
                 </div>
 
@@ -3004,18 +2848,9 @@
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td><strong>Priya Sharma</strong><div style="font-size:11px; color:var(--text-muted);">priya@example.com</div></td>
-                                <td>+91 98230 11223</td>
-                                <td><span class="priority-pill low">User</span></td>
-                                <td><span style="color:var(--neon-green); font-size:11px; font-weight:700;">● Active</span></td>
-                                <td><button style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#FFF; font-size:11px; padding:4px 8px; border-radius:6px; cursor:pointer;">Deactivate</button></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Neha Patil</strong><div style="font-size:11px; color:var(--text-muted);">neha@volunteer.org</div></td>
-                                <td>+91 94220 88776</td>
-                                <td><span class="priority-pill medium">Volunteer</span></td>
-                                <td><span style="color:var(--neon-green); font-size:11px; font-weight:700;">● Active</span></td>
-                                <td><button style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#FFF; font-size:11px; padding:4px 8px; border-radius:6px; cursor:pointer;">Deactivate</button></td>
+                                <td colspan="5" style="text-align:center; padding:25px; color:var(--text-muted);">
+                                    No registered users found in database.
+                                </td>
                             </tr>
                         {% endif %}
                     </tbody>
@@ -3129,8 +2964,8 @@
         function openHelplineDrawer() { openModal('helplinesModal'); }
         function openUsersModal() { openModal('usersModal'); }
         function openVolunteersModal() { openModal('usersModal'); }
-        function openNotificationDrawer() { alert("Showing 5 high-priority alerts: Green Valley SOS (Open), Riverside SOS (Active), Volunteer registration Neha Patil pending."); }
-        function openAuditModal() { alert("Audit Log exported: 12 events recorded in last 2 hours."); }
+        function openNotificationDrawer() { alert("Live System Notifications: {{ unread_notifications_count|default:0 }} unread alerts recorded in database."); }
+        function openAuditModal() { scrollToSection('reporting-hub-section'); }
         function openSettingsModal() { alert("Admin Settings: Geofence threshold = 500m, Check-in timeout = 60s, Auto-dispatch unit = Enabled."); }
         function toggleProfileDropdown() { alert("Logged in as Admin (System Administrator).\nSession Active."); }
 
@@ -3238,39 +3073,43 @@
                 });
             }
 
-            // Pins for incidents matching reference image
-            const incidents = [
-                { id: 1, title: "Green Valley Society (Block B)", status: "Open", color: "#FF007A", lat: 18.528, lng: 18.528 ? 73.852 : 0, pulse: true },
-                { id: 2, title: "Riverside Apartments", status: "Active", color: "#00F0FF", lat: 18.536, lng: 73.868, pulse: false },
-                { id: 3, title: "City Park Main Gate", status: "Open", color: "#FF007A", lat: 18.514, lng: 73.842, pulse: true },
-                { id: 4, title: "Sunrise Residency", status: "Active", color: "#00F0FF", lat: 18.542, lng: 73.849, pulse: false },
-                { id: 5, title: "MG Road Near Bus Stop", status: "Resolved", color: "#00E676", lat: 18.508, lng: 73.874, pulse: false },
-                { id: 6, title: "Lake View Society", status: "Resolved", color: "#00E676", lat: 18.521, lng: 73.882, pulse: false },
-                { id: 7, title: "Model Colony Patrol Van", status: "Active", color: "#00F0FF", lat: 18.532, lng: 73.834, pulse: false },
-            ];
+            // Real database incidents for live map
+            const incidents = {{ alerts_map_data_json|safe }};
 
-            incidents.forEach(inc => {
-                const marker = L.marker([inc.lat, inc.lng], { icon: createGlowingPin(inc.color, inc.pulse) }).addTo(map);
-                marker.bindPopup(`
-                    <div style="font-family:'Plus Jakarta Sans',sans-serif; min-width:180px; padding:4px;">
-                        <strong style="color:#000; font-size:13px; display:block; margin-bottom:4px;">${inc.title}</strong>
-                        <div style="font-size:11px; margin-bottom:8px;">Status: <b style="color:${inc.color}">${inc.status}</b></div>
-                        <button onclick="viewIncidentDetail(${inc.id}, '${inc.title}', '${inc.title}', 'Now', 'High', '${inc.status}', '${inc.lat}', '${inc.lng}', '90%')" style="background:#0D1424; color:#00F0FF; border:1px solid #00F0FF; padding:4px 10px; border-radius:6px; cursor:pointer; font-size:11px; font-weight:700; width:100%;">
-                            Inspect Incident
-                        </button>
-                    </div>
-                `);
-            });
+            if (incidents.length > 0) {
+                const markerGroup = [];
+                incidents.forEach(inc => {
+                    const marker = L.marker([inc.lat, inc.lng], { icon: createGlowingPin(inc.color || '#FF007A', true) }).addTo(map);
+                    marker.bindPopup(`
+                        <div style="font-family:'Plus Jakarta Sans',sans-serif; min-width:180px; padding:4px;">
+                            <strong style="color:#000; font-size:13px; display:block; margin-bottom:4px;">${inc.title}</strong>
+                            <div style="font-size:11px; margin-bottom:4px;">User: <b>${inc.user}</b></div>
+                            <div style="font-size:11px; margin-bottom:8px;">Status: <b style="color:${inc.color || '#FF007A'}">${inc.status}</b></div>
+                            <button onclick="viewIncidentDetail('${inc.id}', '${inc.user}', '${inc.title}', '${inc.time}', 'High', '${inc.status}', '${inc.lat}', '${inc.lng}', '${inc.battery}')" style="background:#0D1424; color:#00F0FF; border:1px solid #00F0FF; padding:4px 10px; border-radius:6px; cursor:pointer; font-size:11px; font-weight:700; width:100%;">
+                                Inspect Incident
+                            </button>
+                        </div>
+                    `);
+                    markerGroup.push(marker);
+                });
 
-            // Radar Circle on primary active incident
-            L.circle([18.528, 73.852], {
-                color: '#FF007A',
-                fillColor: '#FF007A',
-                fillOpacity: 0.15,
-                radius: 450,
-                weight: 1.5,
-                dashArray: '4, 4'
-            }).addTo(map);
+                // Radar circle around first active incident
+                L.circle([incidents[0].lat, incidents[0].lng], {
+                    color: '#FF007A',
+                    fillColor: '#FF007A',
+                    fillOpacity: 0.15,
+                    radius: 450,
+                    weight: 1.5,
+                    dashArray: '4, 4'
+                }).addTo(map);
+
+                if (incidents.length === 1) {
+                    map.setView([incidents[0].lat, incidents[0].lng], 14);
+                } else {
+                    const group = L.featureGroup(markerGroup);
+                    map.fitBounds(group.getBounds().pad(0.2));
+                }
+            }
 
             // ========================================================
             // CHART.JS: ALERTS OVER TIME DUAL LINE GRAPH
@@ -3286,14 +3125,18 @@
             cyanGradient.addColorStop(0, 'rgba(0, 240, 255, 0.25)');
             cyanGradient.addColorStop(1, 'rgba(0, 240, 255, 0.0)');
 
+            const trend7Labels = {{ trend_7_labels_json|safe }};
+            const trend7Total = {{ trend_7_total_json|safe }};
+            const trend7Resolved = {{ trend_7_resolved_json|safe }};
+
             window.alertsChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Sep 12', 'Sep 13', 'Sep 14', 'Sep 15', 'Sep 16', 'Sep 17', 'Sep 18'],
+                    labels: trend7Labels,
                     datasets: [
                         {
                             label: 'Total Alerts',
-                            data: [18, 24, 38, 31, 46, 32, 49],
+                            data: trend7Total,
                             borderColor: '#FF007A',
                             borderWidth: 2.2,
                             backgroundColor: pinkGradient,
@@ -3307,7 +3150,7 @@
                         },
                         {
                             label: 'Resolved',
-                            data: [10, 16, 26, 21, 36, 25, 41],
+                            data: trend7Resolved,
                             borderColor: '#00F0FF',
                             borderWidth: 2,
                             backgroundColor: cyanGradient,
@@ -3342,9 +3185,8 @@
                         },
                         y: {
                             grid: { color: 'rgba(255, 255, 255, 0.04)', drawBorder: false },
-                            ticks: { color: '#64748B', font: { size: 9 }, stepSize: 15 },
-                            beginAtZero: true,
-                            max: 55
+                            ticks: { color: '#64748B', font: { size: 9 }, precision: 0, stepSize: 1 },
+                            beginAtZero: true
                         }
                     }
                 }
@@ -3354,17 +3196,17 @@
         function updateTrendsChart(days) {
             if (!window.alertsChart) return;
             if (days == '14') {
-                window.alertsChart.data.labels = ['Sep 5', 'Sep 7', 'Sep 9', 'Sep 11', 'Sep 13', 'Sep 15', 'Sep 17'];
-                window.alertsChart.data.datasets[0].data = [22, 29, 34, 38, 42, 35, 49];
-                window.alertsChart.data.datasets[1].data = [15, 20, 25, 30, 36, 29, 41];
+                window.alertsChart.data.labels = {{ trend_14_labels_json|safe }};
+                window.alertsChart.data.datasets[0].data = {{ trend_14_total_json|safe }};
+                window.alertsChart.data.datasets[1].data = {{ trend_14_resolved_json|safe }};
             } else if (days == '30') {
-                window.alertsChart.data.labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-                window.alertsChart.data.datasets[0].data = [112, 145, 168, 192];
-                window.alertsChart.data.datasets[1].data = [98, 126, 150, 175];
+                window.alertsChart.data.labels = {{ trend_30_labels_json|safe }};
+                window.alertsChart.data.datasets[0].data = {{ trend_30_total_json|safe }};
+                window.alertsChart.data.datasets[1].data = {{ trend_30_resolved_json|safe }};
             } else {
-                window.alertsChart.data.labels = ['Sep 12', 'Sep 13', 'Sep 14', 'Sep 15', 'Sep 16', 'Sep 17', 'Sep 18'];
-                window.alertsChart.data.datasets[0].data = [18, 24, 38, 31, 46, 32, 49];
-                window.alertsChart.data.datasets[1].data = [10, 16, 26, 21, 36, 25, 41];
+                window.alertsChart.data.labels = {{ trend_7_labels_json|safe }};
+                window.alertsChart.data.datasets[0].data = {{ trend_7_total_json|safe }};
+                window.alertsChart.data.datasets[1].data = {{ trend_7_resolved_json|safe }};
             }
             window.alertsChart.update();
         }
@@ -3458,23 +3300,25 @@
 
             const womenCount = Number("{{ user_role_json|default:0 }}");
             const guardianCount = Number("{{ guardian_role_json|default:0 }}");
+            const friendCount = Number("{{ friend_role_json|default:0 }}");
             const volunteerCount = Number("{{ volunteer_role_json|default:0 }}");
             const adminCount = Number("{{ admin_role_json|default:0 }}");
 
             new Chart(ctx.getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['Women', 'Guardian', 'Volunteer', 'Admin'],
+                    labels: ['Women', 'Guardian', 'Friend', 'Volunteer', 'Admin'],
                     datasets: [{
                         label: 'Registered Users',
-                        data: [womenCount, guardianCount, volunteerCount, adminCount],
+                        data: [womenCount, guardianCount, friendCount, volunteerCount, adminCount],
                         backgroundColor: [
                             'rgba(255, 0, 122, 0.75)',
                             'rgba(0, 240, 255, 0.75)',
                             'rgba(0, 230, 118, 0.75)',
+                            'rgba(245, 158, 11, 0.75)',
                             'rgba(139, 92, 246, 0.75)'
                         ],
-                        borderColor: ['#FF007A', '#00F0FF', '#00E676', '#8B5CF6'],
+                        borderColor: ['#FF007A', '#00F0FF', '#00E676', '#F59E0B', '#8B5CF6'],
                         borderWidth: 1.5,
                         borderRadius: 6,
                         borderSkipped: false
