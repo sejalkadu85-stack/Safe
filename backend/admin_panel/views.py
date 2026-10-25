@@ -737,3 +737,19 @@ class AdminExportIncidentsPdfView(APIView):
         response['Content-Disposition'] = f'{disposition}; filename="{filename}"'
         return response
 
+
+
+def admin_report_html_view(request):
+    """
+    Renders a standalone, responsive, printable HTML executive report
+    that opens directly in any browser on mobile or desktop without needing
+    Microsoft Excel or external apps.
+    """
+    from .reports_service import get_filtered_alerts, compile_reporting_dataset
+    alerts_qs = get_filtered_alerts(request.GET)
+    report_data = compile_reporting_dataset(alerts_qs)
+    return render(request, 'admin_report_view.html', {
+        'report': report_data,
+        'filter_params': request.GET,
+        'generated_at': timezone.now()
+    })

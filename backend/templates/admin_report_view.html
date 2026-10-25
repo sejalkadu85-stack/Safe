@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeHer — Emergency Incident &amp; Intelligence Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #070B14;
+            --bg-card: #0D1627;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --neon-pink: #FF007A;
+            --neon-cyan: #00F0FF;
+            --neon-green: #10B981;
+            --neon-amber: #F59E0B;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            padding: 24px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .report-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Top Bar */
+        .top-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .btn-print {
+            background: rgba(0, 240, 255, 0.12);
+            border-color: rgba(0, 240, 255, 0.4);
+            color: var(--neon-cyan);
+        }
+
+        .btn-pdf {
+            background: rgba(255, 0, 122, 0.12);
+            border-color: rgba(255, 0, 122, 0.4);
+            color: var(--neon-pink);
+        }
+
+        .btn-excel {
+            background: rgba(16, 185, 129, 0.12);
+            border-color: rgba(16, 185, 129, 0.4);
+            color: var(--neon-green);
+        }
+
+        /* Header Card */
+        .report-header {
+            background: linear-gradient(135deg, rgba(13, 22, 39, 0.95), rgba(7, 11, 20, 0.95));
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-title-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
+            color: #FFF;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #FFF;
+        }
+
+        .header-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* KPI Cards Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .kpi-val {
+            font-size: 26px;
+            font-weight: 800;
+            color: #FFF;
+        }
+
+        .kpi-val.pink { color: var(--neon-pink); }
+        .kpi-val.cyan { color: var(--neon-cyan); }
+        .kpi-val.green { color: var(--neon-green); }
+        .kpi-val.amber { color: var(--neon-amber); }
+
+        /* Tables */
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #FFF;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            text-align: left;
+            padding: 10px 14px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #CBD5E1;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-status.active {
+            background: rgba(255, 0, 122, 0.15);
+            color: var(--neon-pink);
+            border: 1px solid rgba(255, 0, 122, 0.3);
+        }
+
+        .badge-status.resolved {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--neon-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-status.cancelled {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--text-muted);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .mono-id {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--neon-cyan);
+        }
+
+        @media print {
+            body { background: #FFF; color: #000; padding: 0; }
+            .top-toolbar { display: none; }
+            .report-header { background: #F8FAFC; border: 1px solid #CBD5E1; color: #000; box-shadow: none; }
+            .header-title { color: #000; }
+            .kpi-card { background: #F8FAFC; border: 1px solid #E2E8F0; }
+            .kpi-val { color: #000 !important; }
+            .section-card { background: #FFF; border: 1px solid #CBD5E1; }
+            .section-title { color: #000; }
+            th { background: #F1F5F9; color: #475569; border-bottom: 1px solid #CBD5E1; }
+            td { color: #1E293B; border-bottom: 1px solid #E2E8F0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="report-container">
+        <!-- Top Toolbar -->
+        <div class="top-toolbar">
+            <a href="/admin-panel/dashboard/" class="back-link">
+                ← Back to Dashboard
+            </a>
+            <div class="toolbar-actions">
+                <button onclick="window.print()" class="btn-action btn-print">
+                    🖨️ Print / Save PDF
+                </button>
+                <a href="/admin-panel/api/reports/export/pdf/?view=inline" target="_blank" class="btn-action btn-pdf">
+                    📄 Executive PDF
+                </a>
+                <a href="/admin-panel/api/reports/export/excel/" class="btn-action btn-excel">
+                    📊 Download Excel (.xlsx)
+                </a>
+                <a href="/admin-panel/api/reports/export/csv/" class="btn-action" style="background:rgba(255,255,255,0.08); color:#FFF;">
+                    📁 Download CSV
+                </a>
+            </div>
+        </div>
+
+        <!-- Executive Report Header -->
+        <div class="report-header">
+            <div class="header-title-row">
+                <span class="brand-badge">SafeHer Intelligence</span>
+                <h1 class="header-title">Executive Incident &amp; Operations Report</h1>
+            </div>
+            <div class="header-meta">
+                Generated: {{ generated_at|date:"M d, Y h:i A" }} · System Operational Status: Nominal
+            </div>
+        </div>
+
+        <!-- Summary KPIs -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Total Incidents</div>
+                <div class="kpi-val">{{ report.summary.total_incidents|default:0 }}</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Active Threats</div>
+                <div class="kpi-val pink">{{ report.summary.active_incidents|default:0 }}</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Safely Resolved</div>
+                <div class="kpi-val green">{{ report.summary.resolved_incidents|default:0 }}</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Resolution Rate</div>
+                <div class="kpi-val cyan">{{ report.summary.resolution_rate|default:0 }}%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Avg Response Time</div>
+                <div class="kpi-val amber">{{ report.summary.avg_response_time_minutes|default:0 }} min</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Tier-3 Escalations</div>
+                <div class="kpi-val">{{ report.summary.escalated_tier3|default:0 }}</div>
+            </div>
+        </div>
+
+        <!-- Section 1: Detailed Incident Records -->
+        <div class="section-card">
+            <div class="section-title">
+                <span>📋</span> Complete Incident Audit Records ({{ report.incidents|length }})
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Incident ID</th>
+                        <th>Reported At</th>
+                        <th>Victim / User</th>
+                        <th>Contact</th>
+                        <th>Society / Locality</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Responder</th>
+                        <th>Response Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inc in report.incidents %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td class="mono-id">#{{ inc.id }}</td>
+                        <td>{{ inc.created_at_human }}</td>
+                        <td><strong>{{ inc.sender_name }}</strong></td>
+                        <td>{{ inc.sender_phone|default:"—" }}</td>
+                        <td>{{ inc.society|default:"—" }}</td>
+                        <td>{{ inc.category }}</td>
+                        <td>
+                            <span class="badge-status {{ inc.status|lower }}">{{ inc.status }}</span>
+                        </td>
+                        <td>{{ inc.responder_name|default:"Unassigned" }}</td>
+                        <td>
+                            {% if inc.response_time_min %}
+                                {{ inc.response_time_min }} min
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" style="text-align:center; padding:32px; color:var(--text-muted);">
+                            🛡️ No emergency incidents recorded matching current filters.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 2: Society / Locality Density -->
+        <div class="section-card">
+            <div class="section-title">
+                <span>🏙️</span> Locality &amp; Society Density Breakdown
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Society / Area</th>
+                        <th>Total Alerts</th>
+                        <th>Active</th>
+                        <th>Resolved</th>
+                        <th>Threat Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for soc in report.society_breakdown %}
+                    <tr>
+                        <td><strong>{{ soc.society }}</strong></td>
+                        <td>{{ soc.total }}</td>
+                        <td style="color:var(--neon-pink); font-weight:700;">{{ soc.active }}</td>
+                        <td style="color:var(--neon-green); font-weight:700;">{{ soc.resolved }}</td>
+                        <td>
+                            <span class="badge-status {% if soc.active > 0 %}active{% else %}resolved{% endif %}">
+                                {% if soc.active > 0 %}Elevated (Active Alert){% else %}Clear / Safe{% endif %}
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align:center; padding:24px; color:var(--text-muted);">
+                            No geographical cluster alerts recorded.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align:center; padding:24px 0; color:var(--text-muted); font-size:12px;">
+            SafeHer Women Safety Intelligence Network · Confidential Administrative Telemetry
+        </div>
+    </div>
+
+</body>
+</html>

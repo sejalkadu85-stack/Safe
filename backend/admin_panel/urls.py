@@ -15,6 +15,7 @@ from .views import (
     AdminExportIncidentsExcelView,
     AdminExportIncidentsCsvView,
     AdminExportIncidentsPdfView,
+    admin_report_html_view,
 )
 
 app_name = 'admin_panel'
@@ -55,4 +56,5 @@ urlpatterns = [
     path('api/reports/export/excel/', AdminExportIncidentsExcelView.as_view(), name='admin_export_excel'),
     path('api/reports/export/csv/', AdminExportIncidentsCsvView.as_view(), name='admin_export_csv'),
     path('api/reports/export/pdf/', AdminExportIncidentsPdfView.as_view(), name='admin_export_pdf'),
+    path('reports/view/', admin_report_html_view, name='admin_report_html_view'),
 ]
