@@ -45,7 +45,7 @@ urlpatterns = [
     path('api/location/', include('location.urls')),
     path('api/messages/', include('messaging.urls')),
     path('api/community/', include('community.urls')),
-    path('api/admin-panel/', include('admin_panel.urls')),
+    path('api/admin-panel/', include(('admin_panel.urls', 'admin_panel'), namespace='admin_panel_api')),
     path('api/notifications/', include('notifications.urls')),
 
     # Safe Journey Mode (Task 4.1)
