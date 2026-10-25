@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.db.models import Count, Q
 from django.contrib import messages
 from django.http import HttpResponse
+import json
+from datetime import timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
@@ -107,7 +109,6 @@ def dashboard_web_view(request):
             title = request.POST.get('title', 'Emergency Alert')
             body = request.POST.get('body', '')
             if body:
-                from notifications.models import Notification
                 active_users = CustomUser.objects.filter(is_active=True)
                 notifs = [
                     Notification(recipient=u, notification_type='check_in', title=title, body=body, data={'broadcast': True})
@@ -148,7 +149,6 @@ def dashboard_web_view(request):
     rejected_verification_count = CustomUser.objects.filter(verification_status='rejected').count()
 
     # Analytics: Incident category breakdown (real data)
-    from django.db.models import Count
     alert_categories = list(
         SOSAlert.objects.values('category')
         .annotate(count=Count('id'))
@@ -156,9 +156,6 @@ def dashboard_web_view(request):
     )
 
     # Analytics: Hourly distribution for last 7 days (or all recorded alerts if none in 7d)
-    from django.utils import timezone
-    import json
-    from datetime import timedelta
     now = timezone.now()
     seven_days_ago = now - timedelta(days=7)
     hourly_raw = list(SOSAlert.objects.filter(created_at__gte=seven_days_ago))
