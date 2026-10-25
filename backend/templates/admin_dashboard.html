@@ -3196,11 +3196,29 @@
                 attributionControl: false
             });
 
-            // Dark CartoDB Matter tile layer
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            // Tile Layers
+            const darkCyberLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                 maxZoom: 19,
                 subdomains: 'abcd'
-            }).addTo(map);
+            });
+
+            const googleRoadmapLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            });
+
+            const googleHybridLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            });
+
+            darkCyberLayer.addTo(map);
+
+            L.control.layers({
+                "🌙 Cyber Dark": darkCyberLayer,
+                "🗺️ Google Maps": googleRoadmapLayer,
+                "🛰️ Google Satellite": googleHybridLayer
+            }, null, { position: 'topright' }).addTo(map);
 
             // Custom glowing pin SVG icons
             function createGlowingPin(color, pulse = false) {

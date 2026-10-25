@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvCurrentDetected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Environment: Physical Mobile Device"
+        android:textColor="#94A3B8"
+        android:textSize="12sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Server Host &amp; Port:"
+        android:textColor="#1F2937"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/etServerHost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background_normal"
+        android:hint="e.g. 10.223.139.210:8000"
+        android:padding="10dp"
+        android:textSize="14sp"
+        android:inputType="textUri"
+        android:textColor="#111827" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quick Presets:"
+        android:textColor="#6B7280"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="6dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/btnPresetWifi"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Wi-Fi"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btnPresetUsb"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="USB Rev"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btnPresetEmulator"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Emulator"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tip: For Wi-Fi, run Django with 'python manage.py runserver 0.0.0.0:8000'. For USB, run 'adb reverse tcp:8000 tcp:8000'."
+        android:textColor="#6B7280"
+        android:textSize="11sp"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

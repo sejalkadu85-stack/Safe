@@ -13,15 +13,37 @@ object ApiClient {
     @Volatile
     private var apiService: ApiService? = null
 
+    @Volatile
+    private var currentBaseUrl: String? = null
+
     fun getService(context: Context): ApiService {
-        return apiService ?: synchronized(this) {
-            apiService ?: buildRetrofit(context).create(ApiService::class.java).also {
-                apiService = it
+        val targetBaseUrl = Constants.getBaseUrl(context)
+        val existing = apiService
+        if (existing != null && currentBaseUrl == targetBaseUrl) {
+            return existing
+        }
+
+        return synchronized(this) {
+            val doubleCheck = apiService
+            if (doubleCheck != null && currentBaseUrl == targetBaseUrl) {
+                doubleCheck
+            } else {
+                currentBaseUrl = targetBaseUrl
+                buildRetrofit(context, targetBaseUrl).create(ApiService::class.java).also {
+                    apiService = it
+                }
             }
         }
     }
 
-    private fun buildRetrofit(context: Context): Retrofit {
+    fun reset() {
+        synchronized(this) {
+            apiService = null
+            currentBaseUrl = null
+        }
+    }
+
+    private fun buildRetrofit(context: Context, baseUrl: String): Retrofit {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -29,15 +51,16 @@ object ApiClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(context))
             .addInterceptor(loggingInterceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(20, TimeUnit.SECONDS)
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(baseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 }
+

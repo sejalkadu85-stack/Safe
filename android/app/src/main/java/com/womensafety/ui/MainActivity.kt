@@ -124,6 +124,11 @@ class MainActivity : AppCompatActivity() {
         val username = prefs.getUserName().takeIf { !it.isNullOrBlank() } ?: "SafeHer"
         binding.tvUserGreeting.text = "Hello, ${username.replaceFirstChar { it.uppercase() }}"
 
+        binding.ivAvatar.setOnLongClickListener {
+            com.womensafety.utils.ServerConfigDialog.show(this)
+            true
+        }
+
         binding.btnNotifications.setOnClickListener {
             startActivity(Intent(this, AlertHistoryActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

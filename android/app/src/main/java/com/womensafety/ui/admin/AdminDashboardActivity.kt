@@ -79,6 +79,12 @@ class AdminDashboardActivity : AppCompatActivity() {
         binding.btnOpenWebConsole.setOnClickListener {
             openWebConsole()
         }
+        binding.btnOpenWebConsole.setOnLongClickListener {
+            com.womensafety.utils.ServerConfigDialog.show(this) {
+                fetchLiveStats()
+            }
+            true
+        }
 
         // Automatic Escalation Settings
         binding.btnEscalationSettings.setOnClickListener {
@@ -387,8 +393,8 @@ class AdminDashboardActivity : AppCompatActivity() {
     }
 
     private fun openWebConsole() {
-        // 10.0.2.2 is host loopback for Android emulator, 127.0.0.1 for local device
-        val url = "http://10.0.2.2:8000/admin-panel/dashboard/"
+        val host = com.womensafety.utils.Constants.getServerHost(this)
+        val url = "http://$host/admin-panel/dashboard/"
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)

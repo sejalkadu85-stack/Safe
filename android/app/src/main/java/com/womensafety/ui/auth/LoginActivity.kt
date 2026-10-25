@@ -35,6 +35,10 @@ class LoginActivity : AppCompatActivity() {
 
         authRepository = AuthRepository(this)
 
+        binding.ivLogo.setOnClickListener {
+            com.womensafety.utils.ServerConfigDialog.show(this)
+        }
+
         setupRoleSelectors()
         setupListeners()
     }
