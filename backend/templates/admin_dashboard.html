@@ -3052,14 +3052,13 @@
                 subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
             });
 
-            // Default to Google Maps Satellite (Hybrid)
-            googleHybridLayer.addTo(map);
+            // Default to classic Google Maps Roadmap view
+            googleRoadmapLayer.addTo(map);
 
             L.control.layers({
-                "🛰️ Google Satellite": googleHybridLayer,
                 "🗺️ Google Maps": googleRoadmapLayer,
-                "🛰️ Pure Satellite": googleSatLayer,
-                "⛰️ Google Terrain": googleTerrainLayer
+                "⛰️ Google Terrain": googleTerrainLayer,
+                "🛰️ Google Satellite": googleHybridLayer
             }, null, { position: 'topright' }).addTo(map);
 
             // Custom glowing pin SVG icons

@@ -178,14 +178,14 @@ class LiveTrackingActivity : AppCompatActivity() {
                         subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
                     });
 
-                    // Default to Google Maps Satellite Hybrid
-                    googleHybrid.addTo(map);
+                    // Default to classic Google Maps Roadmap
+                    googleRoadmap.addTo(map);
 
                     // Layer Switcher
                     var baseLayers = {
-                        "Satellite": googleHybrid,
                         "Google Map": googleRoadmap,
-                        "Terrain": googleTerrain
+                        "Terrain": googleTerrain,
+                        "Satellite": googleHybrid
                     };
                     L.control.layers(baseLayers, null, { position: 'topleft' }).addTo(map);
 
