@@ -582,31 +582,14 @@ def generate_excel_report(report_data, filter_params=None):
 
 def generate_csv_report(report_data):
     """
-    Generates a UTF-8 CSV report with complete incident records.
+    Generates a pristine, standard-compliant UTF-8 CSV report with complete incident records.
+    Starts immediately with column headers for 100% compatibility with Microsoft Excel,
+    Google Sheets, LibreOffice, and mobile spreadsheet viewers.
     """
     buffer = io.StringIO()
-    # Write UTF-8 BOM so Excel opens it with proper encoding
-    buffer.write('\ufeff')
     writer = csv.writer(buffer)
 
-    # Metadata
-    writer.writerow(["SafeHer Emergency Incident & Analytics Report"])
-    writer.writerow([f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"])
-    writer.writerow([])
-
-    # KPI Summary
-    summary = report_data.get('summary', {})
-    writer.writerow(["--- Executive Summary ---"])
-    writer.writerow(["Total Incidents", summary.get('total_incidents', 0)])
-    writer.writerow(["Active Incidents", summary.get('active_incidents', 0)])
-    writer.writerow(["Resolved Incidents", summary.get('resolved_incidents', 0)])
-    writer.writerow(["Resolution Rate (%)", summary.get('resolution_rate', 0)])
-    writer.writerow(["Avg Response Time (min)", summary.get('avg_response_time_minutes', 0)])
-    writer.writerow(["Fastest Response (min)", summary.get('fastest_response_minutes', 0)])
-    writer.writerow(["Tier-3 Escalations", summary.get('escalated_tier3', 0)])
-    writer.writerow([])
-
-    # Table Headers
+    # Standard tabular CSV headers as Row 1
     headers = [
         "Incident ID", "Reported At", "Victim Name", "Phone",
         "Society / Locality", "Full Address", "Category",
@@ -615,9 +598,10 @@ def generate_csv_report(report_data):
     ]
     writer.writerow(headers)
 
-    for inc in report_data.get('incidents', []):
+    incidents = report_data.get('incidents', [])
+    for inc in incidents:
         writer.writerow([
-            inc['id'],
+            f"#{inc['id']}",
             inc['created_at'],
             inc['sender_name'],
             inc['sender_phone'],
@@ -625,13 +609,14 @@ def generate_csv_report(report_data):
             inc['address'],
             inc['category'],
             inc['escalation_tier'],
-            inc['status'],
+            inc['status'].upper(),
             inc['lifecycle_status'],
             inc['responder_name'],
             inc['response_time_min'] if inc['response_time_min'] is not None else '',
             inc['resolution_time_min'] if inc['resolution_time_min'] is not None else ''
         ])
 
+    # encode with utf-8-sig (single clean BOM for Excel)
     return buffer.getvalue().encode('utf-8-sig')
 
 

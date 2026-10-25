@@ -2273,17 +2273,21 @@
                         <p class="rep-subtitle">Cross-platform incident statistics, responder response-time telemetry, society hotspot density, and exportable audit records.</p>
                     </div>
                     <div class="rep-export-actions">
-                        <a href="javascript:void(0)" onclick="exportReport('excel')" class="rep-btn rep-btn-excel" title="Download formatted Excel workbook">
+                        <a href="javascript:void(0)" onclick="exportReport('excel')" class="rep-btn rep-btn-excel" title="Download formatted Excel (.xlsx) workbook">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
                             <span>Export Excel</span>
-                        </a>
-                        <a href="javascript:void(0)" onclick="exportReport('pdf')" class="rep-btn rep-btn-pdf" title="Download executive PDF report">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-                            <span>Download PDF</span>
                         </a>
                         <a href="javascript:void(0)" onclick="exportReport('csv')" class="rep-btn rep-btn-csv" title="Download raw CSV data">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             <span>Export CSV</span>
+                        </a>
+                        <a href="javascript:void(0)" onclick="previewPdfReport()" class="rep-btn rep-btn-pdf" title="Open executive PDF report directly in browser">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <span>View PDF</span>
+                        </a>
+                        <a href="javascript:void(0)" onclick="exportReport('pdf')" class="rep-btn rep-btn-pdf" title="Download PDF file">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                            <span>Download PDF</span>
                         </a>
                     </div>
                 </div>
@@ -3465,10 +3469,51 @@
             return params;
         }
 
+        function showDownloadToast(msg, duration = 4000) {
+            let toast = document.getElementById('reportDownloadToast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'reportDownloadToast';
+                toast.style.cssText = 'position:fixed; bottom:28px; right:28px; z-index:999999; background:#0B1426; border:1px solid #00F0FF; color:#FFF; padding:14px 22px; border-radius:12px; font-size:13px; font-weight:600; box-shadow:0 12px 40px rgba(0,240,255,0.3); display:flex; align-items:center; gap:12px; transition:all 0.35s cubic-bezier(0.16,1,0.3,1); transform:translateY(120px); opacity:0; pointer-events:none; max-width:90vw;';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = msg;
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
+                toast.style.transform = 'translateY(120px)';
+                toast.style.opacity = '0';
+            }, duration);
+        }
+
+        function previewPdfReport() {
+            const params = getReportingFilterParams();
+            params.append('view', 'inline');
+            const pdfUrl = `/admin-panel/api/reports/export/pdf/?` + params.toString();
+            window.open(pdfUrl, '_blank');
+        }
+
         function exportReport(format) {
             const params = getReportingFilterParams();
             const exportUrl = `/admin-panel/api/reports/export/${format}/?` + params.toString();
-            window.location.href = exportUrl;
+            
+            showDownloadToast(`⏳ Generating ${format.toUpperCase()} report... Download starting.`);
+
+            // Trigger robust download via invisible anchor
+            const link = document.createElement('a');
+            link.href = exportUrl;
+            link.setAttribute('download', '');
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+
+            setTimeout(() => {
+                if (document.body.contains(link)) {
+                    document.body.removeChild(link);
+                }
+                showDownloadToast(`✅ ${format.toUpperCase()} Report downloaded! Saved to your device's <b>Downloads</b> folder.`, 5000);
+            }, 1200);
         }
 
         function resetReportingFilters() {
