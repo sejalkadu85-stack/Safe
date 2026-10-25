@@ -3031,10 +3031,10 @@
                 attributionControl: false
             });
 
-            // Tile Layers
-            const darkCyberLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                maxZoom: 19,
-                subdomains: 'abcd'
+            // Authentic Google Maps Tile Layers
+            const googleHybridLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
             });
 
             const googleRoadmapLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
@@ -3042,17 +3042,24 @@
                 subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
             });
 
-            const googleHybridLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            const googleSatLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
                 maxZoom: 20,
                 subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
             });
 
-            darkCyberLayer.addTo(map);
+            const googleTerrainLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            });
+
+            // Default to Google Maps Satellite (Hybrid)
+            googleHybridLayer.addTo(map);
 
             L.control.layers({
-                "🌙 Cyber Dark": darkCyberLayer,
+                "🛰️ Google Satellite": googleHybridLayer,
                 "🗺️ Google Maps": googleRoadmapLayer,
-                "🛰️ Google Satellite": googleHybridLayer
+                "🛰️ Pure Satellite": googleSatLayer,
+                "⛰️ Google Terrain": googleTerrainLayer
             }, null, { position: 'topright' }).addTo(map);
 
             // Custom glowing pin SVG icons

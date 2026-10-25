@@ -172,19 +172,20 @@ class LiveTrackingActivity : AppCompatActivity() {
                         subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
                     });
 
-                    // Clean Voyager fallback
-                    var cartoVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                        maxZoom: 20
+                    // Google Terrain Layer
+                    var googleTerrain = L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+                        maxZoom: 20,
+                        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
                     });
 
-                    // Default to Google Maps Roadmap
-                    googleRoadmap.addTo(map);
+                    // Default to Google Maps Satellite Hybrid
+                    googleHybrid.addTo(map);
 
                     // Layer Switcher
                     var baseLayers = {
-                        "Google Map": googleRoadmap,
                         "Satellite": googleHybrid,
-                        "Terrain / Light": cartoVoyager
+                        "Google Map": googleRoadmap,
+                        "Terrain": googleTerrain
                     };
                     L.control.layers(baseLayers, null, { position: 'topleft' }).addTo(map);
 
