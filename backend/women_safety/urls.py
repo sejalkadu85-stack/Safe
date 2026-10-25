@@ -4,6 +4,7 @@ URL configuration for women_safety project.
 
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -36,6 +37,7 @@ from admin_panel.views import (
 )
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/admin-panel/dashboard/', permanent=False), name='root_redirect'),
     path('admin/', admin.site.urls),
     path('admin-panel/', include('admin_panel.urls')),
     

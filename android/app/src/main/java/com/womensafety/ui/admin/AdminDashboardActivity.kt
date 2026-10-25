@@ -39,14 +39,7 @@ class AdminDashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminDashboardBinding
     private lateinit var prefs: SharedPrefManager
 
-    private val incidents = mutableListOf(
-        IncidentItem(1, "Priya Sharma", "Green Valley Society, Block B, Flat 302", "10:42 AM (12 min ago)", "High", "Open", 18.5204, 73.8567, "94%"),
-        IncidentItem(2, "Ananya Sen", "Riverside Apartments, Tower 3, Flat 1204", "09:58 AM (1 hr ago)", "High", "Active", 18.5312, 73.8445, "78%"),
-        IncidentItem(3, "Rashmi Joshi", "City Park, Main Gate", "09:32 AM (1 hr 26 min ago)", "Medium", "Open", 18.5150, 73.8500, "65%"),
-        IncidentItem(4, "Sneha Roy", "Sunrise Residency, Block C, Flat 101", "08:17 AM (2 hr 41 min ago)", "High", "Active", 18.5420, 73.8620, "82%"),
-        IncidentItem(5, "Kavita Menon", "MG Road, Near Bus Stop", "07:22 AM (3 hr 36 min ago)", "Low", "Resolved", 18.5080, 73.8750, "90%"),
-        IncidentItem(6, "Ritu Verma", "Lake View Society, Block A, Flat 405", "06:45 AM (4 hr 13 min ago)", "Medium", "Resolved", 18.5290, 73.8820, "95%")
-    )
+    private val incidents = mutableListOf<IncidentItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +52,7 @@ class AdminDashboardActivity : AppCompatActivity() {
         renderIncidentsList()
         setupListeners()
         fetchLiveStats()
+        fetchLiveIncidents()
     }
 
     private fun setupHeader() {
@@ -214,8 +208,81 @@ class AdminDashboardActivity : AppCompatActivity() {
         }
     }
 
+    private fun fetchLiveIncidents() {
+        lifecycleScope.launch {
+            try {
+                val response = ApiClient.getService(this@AdminDashboardActivity).getAdminSosLogs()
+                if (response.isSuccessful && response.body() != null) {
+                    val map = response.body()!!
+                    @Suppress("UNCHECKED_CAST")
+                    val logs = map["sos_logs"] as? List<Map<String, Any>>
+                    incidents.clear()
+                    if (!logs.isNullOrEmpty()) {
+                        for (item in logs) {
+                            val id = (item["id"] as? Number)?.toInt() ?: 0
+                            val user = (item["sender"] as? String) ?: "User"
+                            val address = (item["address"] as? String)?.takeIf { it.isNotBlank() } ?: "GPS Pin Location"
+                            val time = (item["created_at"] as? String)?.take(16)?.replace("T", " ") ?: "Recent"
+                            val status = (item["status"] as? String)?.replaceFirstChar { it.uppercase() } ?: "Active"
+                            val priority = if (status.equals("active", true)) "High" else "Normal"
+                            val lat = (item["latitude"] as? Number)?.toDouble() ?: 0.0
+                            val lng = (item["longitude"] as? Number)?.toDouble() ?: 0.0
+                            incidents.add(IncidentItem(id, user, address, time, priority, status, lat, lng, "100%"))
+                        }
+                    }
+                    renderIncidentsList()
+                }
+            } catch (_: Exception) {
+                renderIncidentsList()
+            }
+        }
+    }
+
     private fun renderIncidentsList() {
         binding.llIncidentsList.removeAllViews()
+
+        if (incidents.isEmpty()) {
+            val emptyCard = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setBackgroundResource(R.drawable.bg_dark_card)
+                setPadding(40, 48, 40, 48)
+                gravity = android.view.Gravity.CENTER
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(0, 0, 0, 24)
+                }
+            }
+
+            val iconTv = TextView(this).apply {
+                text = "🛡️"
+                textSize = 32f
+                gravity = android.view.Gravity.CENTER
+            }
+
+            val titleTv = TextView(this).apply {
+                text = "All Zones Clear"
+                textSize = 15f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setTextColor(getColor(R.color.white))
+                gravity = android.view.Gravity.CENTER
+                setPadding(0, 12, 0, 4)
+            }
+
+            val subtitleTv = TextView(this).apply {
+                text = "No active emergency SOS alerts recorded."
+                textSize = 12f
+                setTextColor(getColor(R.color.text_secondary))
+                gravity = android.view.Gravity.CENTER
+            }
+
+            emptyCard.addView(iconTv)
+            emptyCard.addView(titleTv)
+            emptyCard.addView(subtitleTv)
+            binding.llIncidentsList.addView(emptyCard)
+            return
+        }
 
         val inflater = LayoutInflater.from(this)
 
@@ -385,7 +452,7 @@ class AdminDashboardActivity : AppCompatActivity() {
                             )
                         } catch (_: Exception) {}
                     }
-                    Toast.makeText(this, "Broadcast dispatched to 1,248 users!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Broadcast alert dispatched successfully!", Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("Cancel", null)
