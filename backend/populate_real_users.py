@@ -125,6 +125,58 @@ def create_or_update_users():
     vol.save()
     print(f"[OK] Volunteer User: {tanushri.get_full_name()} ({tanushri.email}) - Phone: {tanushri.phone_number}")
 
+    # Community Volunteer profile for Kripa Gayakwad
+    vol_kripa, _ = Volunteer.objects.get_or_create(
+        user=kripa,
+        defaults={
+            "is_verified": True,
+            "is_available": True,
+            "phone_number": "+919545813587",
+            "skills": "Emergency Medical • CPR Certified • Safe Companion",
+            "latitude": 18.5180,
+            "longitude": 73.8540,
+            "address": "Deccan Gymkhana, Pune",
+            "total_helps": 8,
+        }
+    )
+    vol_kripa.is_verified = True
+    vol_kripa.is_available = True
+    vol_kripa.phone_number = "+919545813587"
+    vol_kripa.skills = "Emergency Medical • CPR Certified • Safe Companion"
+    vol_kripa.latitude = 18.5180
+    vol_kripa.longitude = 73.8540
+    vol_kripa.address = "Deccan Gymkhana, Pune"
+    vol_kripa.save()
+    print(f"[OK] Volunteer User: {kripa.get_full_name()} ({kripa.email}) - Phone: {kripa.phone_number}")
+
+    # Community Volunteer profile for Anil Kadu
+    try:
+        anil = CustomUser.objects.get(username="anil_522")
+        vol_anil, _ = Volunteer.objects.get_or_create(
+            user=anil,
+            defaults={
+                "is_verified": True,
+                "is_available": True,
+                "phone_number": "+919922859229",
+                "skills": "Civil Defense Volunteer • 24x7 Night Escort",
+                "latitude": 18.5020,
+                "longitude": 73.8580,
+                "address": "Swargate, Pune",
+                "total_helps": 14,
+            }
+        )
+        vol_anil.is_verified = True
+        vol_anil.is_available = True
+        vol_anil.phone_number = "+919922859229"
+        vol_anil.skills = "Civil Defense Volunteer • 24x7 Night Escort"
+        vol_anil.latitude = 18.5020
+        vol_anil.longitude = 73.8580
+        vol_anil.address = "Swargate, Pune"
+        vol_anil.save()
+        print(f"[OK] Volunteer User: {anil.get_full_name()} ({anil.email}) - Phone: {anil.phone_number}")
+    except CustomUser.DoesNotExist:
+        pass
+
     # 4. Link Trusted Contacts for Sejal Kadu
     # Contact 1: Kripa Gayakwad (Tier 1 Primary Guardian)
     c1, _ = TrustedContact.objects.get_or_create(

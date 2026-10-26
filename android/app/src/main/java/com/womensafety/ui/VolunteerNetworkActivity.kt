@@ -61,10 +61,26 @@ class VolunteerNetworkActivity : AppCompatActivity() {
         rvVolunteers.layoutManager = LinearLayoutManager(this)
         rvVolunteers.adapter = adapter
 
+        detectLocation()
         setupRadiusChips()
         setupVolunteerSwitch()
         loadVolunteerProfile()
         loadNearbyVolunteers()
+    }
+
+    private fun detectLocation() {
+        try {
+            val lm = getSystemService(android.content.Context.LOCATION_SERVICE) as? android.location.LocationManager
+            if (androidx.core.app.ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
+                androidx.core.app.ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                val loc = lm?.getLastKnownLocation(android.location.LocationManager.GPS_PROVIDER)
+                    ?: lm?.getLastKnownLocation(android.location.LocationManager.NETWORK_PROVIDER)
+                if (loc != null) {
+                    currentLat = loc.latitude
+                    currentLng = loc.longitude
+                }
+            }
+        } catch (_: Exception) {}
     }
 
     private fun setupRadiusChips() {

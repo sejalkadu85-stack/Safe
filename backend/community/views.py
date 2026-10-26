@@ -137,12 +137,13 @@ class NearbyVolunteersView(APIView):
         except ValueError:
             return Response({'error': 'Invalid lat or lng coordinate'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Query available volunteers who have coordinates
+        # Query available verified volunteers who have coordinates
         volunteers = Volunteer.objects.filter(
             is_available=True,
+            is_verified=True,
             latitude__isnull=False,
             longitude__isnull=False
-        ).exclude(user=request.user).select_related('user')
+        ).select_related('user')
 
         results = []
         for vol in volunteers:
@@ -155,6 +156,17 @@ class NearbyVolunteersView(APIView):
         # Sort by distance
         results.sort(key=lambda x: x[0])
         response_data = [item[1] for item in results]
+
+        # Graceful fallback: If strict radius filtered out all volunteers (e.g. testing from outside Pune),
+        # return the registered community volunteers so the screen displays live real responders
+        if not response_data and volunteers.exists():
+            for vol in volunteers:
+                dist = haversine_distance(user_lat, user_lng, float(vol.latitude), float(vol.longitude))
+                vol_data = VolunteerSerializer(vol).data
+                vol_data['distance_meters'] = round(dist, 1)
+                results.append((dist, vol_data))
+            results.sort(key=lambda x: x[0])
+            response_data = [item[1] for item in results]
 
         return Response({
             'success': True,
