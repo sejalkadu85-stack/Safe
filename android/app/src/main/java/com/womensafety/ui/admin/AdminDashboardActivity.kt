@@ -197,13 +197,30 @@ class AdminDashboardActivity : AppCompatActivity() {
                             val activeStr = formatStat(it)
                             binding.tvStatActiveAlerts.text = activeStr
                             binding.tvIncidentCountBadge.text = "$activeStr Active"
+                            val num = activeStr.toIntOrNull() ?: 0
+                            binding.tvStatActiveAlertsSub.text = if (num > 0) "🚨 $activeStr Emergency" else "All Clear"
                         }
                         stats["resolved_sos_alerts"]?.let { binding.tvStatResolvedAlerts.text = formatStat(it) }
                         stats["total_volunteers"]?.let { binding.tvStatVolunteers.text = formatStat(it) }
+
+                        // Real User Role Breakdown
+                        stats["user_role_count"]?.let { binding.tvRoleUserCount.text = formatStat(it) }
+                        stats["guardian_role_count"]?.let { binding.tvRoleParentCount.text = formatStat(it) }
+                        stats["volunteer_role_count"]?.let { binding.tvRoleVolunteerCount.text = formatStat(it) }
+                        stats["admin_role_count"]?.let { binding.tvRoleResponderCount.text = formatStat(it) }
                     }
                 }
             } catch (_: Exception) {
-                // Keep default visual stats matching reference
+                binding.tvStatTotalUsers.text = "0"
+                binding.tvStatActiveAlerts.text = "0"
+                binding.tvStatActiveAlertsSub.text = "All Clear"
+                binding.tvIncidentCountBadge.text = "0 Active"
+                binding.tvStatResolvedAlerts.text = "0"
+                binding.tvStatVolunteers.text = "0"
+                binding.tvRoleUserCount.text = "0"
+                binding.tvRoleParentCount.text = "0"
+                binding.tvRoleVolunteerCount.text = "0"
+                binding.tvRoleResponderCount.text = "0"
             }
         }
     }

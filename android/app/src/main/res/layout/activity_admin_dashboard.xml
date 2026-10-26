@@ -174,16 +174,17 @@
                         android:id="@+id/tvStatTotalUsers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1,248"
+                        android:text="0"
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:layout_marginTop="4dp" />
 
                     <TextView
+                        android:id="@+id/tvStatTotalUsersSub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="↑ 12% vs last 7d"
+                        android:text="Verified accounts"
                         android:textColor="@color/neon_cyan"
                         android:textSize="10sp"
                         android:textStyle="bold"
@@ -212,16 +213,17 @@
                         android:id="@+id/tvStatActiveAlerts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="7"
+                        android:text="0"
                         android:textColor="@color/neon_pink"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:layout_marginTop="4dp" />
 
                     <TextView
+                        android:id="@+id/tvStatActiveAlertsSub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="🚨 7 Emergency"
+                        android:text="All Clear"
                         android:textColor="@color/neon_pink"
                         android:textSize="10sp"
                         android:textStyle="bold"
@@ -249,16 +251,17 @@
                         android:id="@+id/tvStatResolvedAlerts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="89"
+                        android:text="0"
                         android:textColor="@color/neon_green"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:layout_marginTop="4dp" />
 
                     <TextView
+                        android:id="@+id/tvStatResolvedAlertsSub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="↑ 18% vs last 7d"
+                        android:text="Incidents resolved"
                         android:textColor="@color/neon_green"
                         android:textSize="10sp"
                         android:textStyle="bold"
@@ -286,18 +289,21 @@
                         android:id="@+id/tvStatVolunteers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="56"
+                        android:text="0"
                         android:textColor="@color/neon_purple"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:layout_marginTop="4dp" />
 
                     <TextView
+                        android:id="@+id/tvStatVolunteersSub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="↑ 9% vs last 7d"
+                        android:text="Active responders"
                         android:textColor="@color/neon_purple"
                         android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="2dp" />
                         android:textStyle="bold"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
@@ -363,7 +369,7 @@
                     android:id="@+id/tvIncidentCountBadge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="7 Active"
+                    android:text="0 Active"
                     android:textColor="@color/neon_pink"
                     android:textSize="11sp"
                     android:textStyle="bold"
@@ -417,9 +423,10 @@
                         android:textColor="@color/neon_pink"
                         android:textSize="11sp" />
                     <TextView
+                        android:id="@+id/tvRoleUserCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="892"
+                        android:text="0"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -435,13 +442,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Parent"
+                        android:text="Guardian"
                         android:textColor="@color/neon_cyan"
                         android:textSize="11sp" />
                     <TextView
+                        android:id="@+id/tvRoleParentCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="176"
+                        android:text="0"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -461,15 +469,16 @@
                         android:textColor="@color/neon_orange"
                         android:textSize="11sp" />
                     <TextView
+                        android:id="@+id/tvRoleVolunteerCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="56"
+                        android:text="0"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <!-- Responder -->
+                <!-- Responder / Admin -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -479,13 +488,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Responder"
+                        android:text="Admin"
                         android:textColor="@color/neon_purple"
                         android:textSize="11sp" />
                     <TextView
+                        android:id="@+id/tvRoleResponderCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="26"
+                        android:text="0"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />

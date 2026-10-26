@@ -320,6 +320,11 @@ class AdminStatsApiView(APIView):
     permission_classes = [permissions.AllowAny] # Can be tightened in production
 
     def get(self, request):
+        woman_count = CustomUser.objects.filter(role=CustomUser.Role.WOMAN).count()
+        guardian_count = CustomUser.objects.filter(role__in=[CustomUser.Role.GUARDIAN, CustomUser.Role.FRIEND]).count()
+        volunteer_count = CustomUser.objects.filter(role=CustomUser.Role.VOLUNTEER).count()
+        admin_count = CustomUser.objects.filter(role=CustomUser.Role.ADMIN).count()
+
         stats = {
             'total_users': CustomUser.objects.count(),
             'active_sos_alerts': SOSAlert.objects.filter(status='active').count(),
@@ -330,6 +335,10 @@ class AdminStatsApiView(APIView):
             'verified_volunteers': Volunteer.objects.filter(is_verified=True).count(),
             'available_volunteers': Volunteer.objects.filter(is_available=True).count(),
             'total_evidence_files': EvidenceFile.objects.count(),
+            'user_role_count': woman_count,
+            'guardian_role_count': guardian_count,
+            'volunteer_role_count': volunteer_count,
+            'admin_role_count': admin_count,
             'timestamp': timezone.now().isoformat(),
         }
         return Response({'success': True, 'stats': stats})
