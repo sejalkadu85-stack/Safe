@@ -150,10 +150,15 @@ class LoginSerializer(serializers.Serializer):
         identifier = attrs.get('email_or_phone').strip()
         password = attrs.get('password')
 
-        # Find user by email, phone_number, or username
+        # Find user by email, phone_number, or username (with phone prefix tolerance)
+        phone_alt = "+91" + identifier if (identifier.isdigit() and len(identifier) == 10) else identifier
+        phone_stripped = identifier[3:] if identifier.startswith('+91') else identifier
+
         user_query = CustomUser.objects.filter(
             Q(email__iexact=identifier) |
             Q(phone_number=identifier) |
+            Q(phone_number=phone_alt) |
+            Q(phone_number=phone_stripped) |
             Q(username__iexact=identifier)
         ).first()
 
