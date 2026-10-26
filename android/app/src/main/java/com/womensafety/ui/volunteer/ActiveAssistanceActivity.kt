@@ -16,12 +16,12 @@ class ActiveAssistanceActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityActiveAssistanceBinding
 
-    private var requestId: Int = 1
-    private var victimName: String = "Priya Sharma"
-    private var victimPhone: String = "+919021380010"
-    private var victimAddress: String = "Green Valley Society, Block B, Flat 302"
-    private var victimLat: Double = 18.5204
-    private var victimLng: Double = 73.8567
+    private var requestId: Int = 0
+    private var victimName: String = "Citizen"
+    private var victimPhone: String = ""
+    private var victimAddress: String = "Location coordinates logged"
+    private var victimLat: Double = 0.0
+    private var victimLng: Double = 0.0
     private var currentStep: Int = 1 // 1: Accepted, 2: On The Way, 3: Arrived, 4: Resolved
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,12 +30,12 @@ class ActiveAssistanceActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Read intent extras if passed
-        requestId = intent.getIntExtra("request_id", 1)
-        victimName = intent.getStringExtra("victim_name") ?: "Priya Sharma"
-        victimPhone = intent.getStringExtra("victim_phone") ?: "+919021380010"
-        victimAddress = intent.getStringExtra("victim_address") ?: "Green Valley Society, Block B, Flat 302"
-        victimLat = intent.getDoubleExtra("victim_lat", 18.5204)
-        victimLng = intent.getDoubleExtra("victim_lng", 73.8567)
+        requestId = intent.getIntExtra("request_id", 0)
+        victimName = intent.getStringExtra("victim_name") ?: "Citizen"
+        victimPhone = intent.getStringExtra("victim_phone") ?: ""
+        victimAddress = intent.getStringExtra("victim_address") ?: "Location coordinates logged"
+        victimLat = intent.getDoubleExtra("victim_lat", 0.0)
+        victimLng = intent.getDoubleExtra("victim_lng", 0.0)
 
         setupUI()
         setupListeners()

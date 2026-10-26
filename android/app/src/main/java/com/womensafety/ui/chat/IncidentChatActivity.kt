@@ -42,8 +42,8 @@ class IncidentChatActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         alertId = intent.getIntExtra(EXTRA_ALERT_ID, 1)
-        victimName = intent.getStringExtra(EXTRA_VICTIM_NAME) ?: "Priya Sharma"
-        category = intent.getStringExtra(EXTRA_CATEGORY) ?: "Harassment"
+        victimName = intent.getStringExtra(EXTRA_VICTIM_NAME) ?: "Citizen"
+        category = intent.getStringExtra(EXTRA_CATEGORY) ?: "Emergency"
 
         prefs = SharedPrefManager.getInstance(this)
         apiService = ApiClient.getService(this)
@@ -173,40 +173,9 @@ class IncidentChatActivity : AppCompatActivity() {
     }
 
     private fun displayDemoMessages() {
+        // No hardcoded messages. Real data loaded from server.
         if (adapter.itemCount == 0) {
-            val demoList = listOf(
-                IncidentMessageItem(
-                    id = 1,
-                    senderName = victimName,
-                    senderRole = "woman",
-                    content = "EMERGENCY: Someone has been following me near the metro station. I need help!",
-                    timestamp = "10:41 PM"
-                ),
-                IncidentMessageItem(
-                    id = 2,
-                    senderName = "System",
-                    senderRole = "admin",
-                    content = "SOS alert broadcast to Primary Guardian and closest Verified Responders.",
-                    timestamp = "10:41 PM"
-                ),
-                IncidentMessageItem(
-                    id = 3,
-                    senderName = "Mom (Primary Guardian)",
-                    senderRole = "guardian",
-                    content = "Priya, I received your SOS! I am calling you right now, stay inside the store!",
-                    timestamp = "10:42 PM"
-                ),
-                IncidentMessageItem(
-                    id = 4,
-                    senderName = "Vikram (Volunteer Responder)",
-                    senderRole = "volunteer",
-                    content = "I am 300m away at Deccan Gymkhana. I am heading to your coordinates now!",
-                    timestamp = "10:43 PM"
-                )
-            )
-            adapter.submitList(demoList) {
-                binding.rvMessages.scrollToPosition(demoList.size - 1)
-            }
+            adapter.submitList(emptyList())
         }
     }
 

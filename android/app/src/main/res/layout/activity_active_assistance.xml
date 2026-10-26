@@ -197,7 +197,7 @@
                     android:id="@+id/tvMissionVictimName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Priya Sharma"
+                    android:text="Citizen in Distress"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -206,7 +206,7 @@
                     android:id="@+id/tvMissionAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="📍 Green Valley Society, Block B, Flat 302"
+                    android:text="📍 Coordinates Logged"
                     android:textColor="@color/neon_cyan"
                     android:textSize="13sp"
                     android:layout_marginTop="4dp" />

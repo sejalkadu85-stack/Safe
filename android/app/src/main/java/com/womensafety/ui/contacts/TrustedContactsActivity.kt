@@ -134,7 +134,7 @@ class TrustedContactsActivity : AppCompatActivity() {
                     val list = if (response.isSuccessful && !response.body().isNullOrEmpty()) {
                         response.body()!!
                     } else {
-                        getMockContacts()
+                        emptyList()
                     }
                     adapter.submitList(list)
 
@@ -152,12 +152,7 @@ class TrustedContactsActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     binding.swipeRefresh.isRefreshing = false
-                    val list = getMockContacts()
-                    adapter.submitList(list)
-                    val primaryPhone = list.firstOrNull()?.phoneNumber
-                    if (!primaryPhone.isNullOrBlank()) {
-                        SharedPrefManager.getInstance(this@TrustedContactsActivity).savePrimaryGuardianPhone(primaryPhone)
-                    }
+                    adapter.submitList(emptyList())
                 }
             }
         }
@@ -327,65 +322,5 @@ class TrustedContactsActivity : AppCompatActivity() {
         }
     }
 
-    private fun getMockContacts(): List<TrustedContactResponse> {
-        return listOf(
-            TrustedContactResponse(
-                id = 1,
-                owner = null,
-                contactUser = null,
-                name = "Mom (Primary Guardian)",
-                phoneNumber = "+91 98765 43210",
-                tier = "primary",
-                tierDisplay = "Primary Guardian (Tier 1)",
-                relationship = "parent",
-                relationshipDisplay = "Parent",
-                status = "accepted",
-                statusDisplay = "Accepted",
-                isVerified = true,
-                nickname = "Mom",
-                notifyViaSms = true,
-                notifyViaEmail = false,
-                notifyViaPush = true,
-                createdAt = "2026-10-01T10:00:00Z"
-            ),
-            TrustedContactResponse(
-                id = 2,
-                owner = null,
-                contactUser = null,
-                name = "Dad (Secondary Guardian)",
-                phoneNumber = "+91 87654 32109",
-                tier = "secondary",
-                tierDisplay = "Secondary Guardian (Tier 2)",
-                relationship = "parent",
-                relationshipDisplay = "Parent",
-                status = "accepted",
-                statusDisplay = "Accepted",
-                isVerified = true,
-                nickname = "Dad",
-                notifyViaSms = true,
-                notifyViaEmail = false,
-                notifyViaPush = true,
-                createdAt = "2026-10-01T10:00:00Z"
-            ),
-            TrustedContactResponse(
-                id = 3,
-                owner = null,
-                contactUser = null,
-                name = "Aisha (Emergency Friend)",
-                phoneNumber = "+91 76543 21098",
-                tier = "friend",
-                tierDisplay = "Friend (Tier 2)",
-                relationship = "friend",
-                relationshipDisplay = "Friend",
-                status = "accepted",
-                statusDisplay = "Accepted",
-                isVerified = true,
-                nickname = "Aisha",
-                notifyViaSms = true,
-                notifyViaEmail = false,
-                notifyViaPush = true,
-                createdAt = "2026-10-01T10:00:00Z"
-            )
-        )
-    }
+    private fun getMockContacts(): List<TrustedContactResponse> = emptyList()
 }

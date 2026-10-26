@@ -42,11 +42,7 @@ class VolunteerDashboardActivity : AppCompatActivity() {
     private var isOnline = true
     private var activeMission: NearbySosItem? = null
 
-    private val nearbyRequests = mutableListOf(
-        NearbySosItem(1, "Priya Sharma", "+919021380010", "Night Distress / Followed", "Green Valley Society, Block B", "420m away", "3 min ETA", "High", 18.5204, 73.8567, "94%"),
-        NearbySosItem(2, "Ananya Sen", "+919867543423", "Unsafe Route Companion", "Riverside Apartments, Tower 3", "780m away", "6 min ETA", "High", 18.5312, 73.8445, "78%"),
-        NearbySosItem(3, "Sneha Roy", "+919876599999", "Vehicle Breakdown / Isolated Road", "Sunrise Residency, Block C", "1.4 km away", "9 min ETA", "Medium", 18.5420, 73.8620, "82%")
-    )
+    private val nearbyRequests = mutableListOf<NearbySosItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,6 +139,49 @@ class VolunteerDashboardActivity : AppCompatActivity() {
 
     private fun renderNearbyRequests() {
         binding.llNearbyRequestsList.removeAllViews()
+
+        if (nearbyRequests.isEmpty()) {
+            val emptyCard = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setBackgroundResource(R.drawable.bg_dark_card)
+                setPadding(40, 48, 40, 48)
+                gravity = android.view.Gravity.CENTER
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(0, 0, 0, 20)
+                }
+            }
+
+            val iconTv = TextView(this).apply {
+                text = "🛡️"
+                textSize = 32f
+                gravity = android.view.Gravity.CENTER
+            }
+
+            val titleTv = TextView(this).apply {
+                text = "All Zones Clear"
+                textSize = 15f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setTextColor(getColor(R.color.white))
+                gravity = android.view.Gravity.CENTER
+                setPadding(0, 12, 0, 4)
+            }
+
+            val subtitleTv = TextView(this).apply {
+                text = "No active volunteer assistance requests in your area."
+                textSize = 12f
+                setTextColor(getColor(R.color.text_secondary))
+                gravity = android.view.Gravity.CENTER
+            }
+
+            emptyCard.addView(iconTv)
+            emptyCard.addView(titleTv)
+            emptyCard.addView(subtitleTv)
+            binding.llNearbyRequestsList.addView(emptyCard)
+            return
+        }
 
         for (sos in nearbyRequests) {
             val card = LinearLayout(this).apply {

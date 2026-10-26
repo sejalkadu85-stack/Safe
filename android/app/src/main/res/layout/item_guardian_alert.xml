@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-bold"
-                    android:text="Priya Sharma"
+                    android:text="Citizen"
                     android:textColor="@color/white"
                     android:textSize="17sp" />
 
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif"
-                    android:text="+91 98765 43210"
+                    android:text="Contact Number"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -154,7 +154,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif"
-                    android:text="FC Road, Deccan Gymkhana, Pune (18.5204, 73.8567)"
+                    android:text="Location coordinates recorded"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </LinearLayout>

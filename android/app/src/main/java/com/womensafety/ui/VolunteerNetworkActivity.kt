@@ -37,54 +37,8 @@ class VolunteerNetworkActivity : AppCompatActivity() {
     private var currentLat = 18.5204
     private var currentLng = 73.8567
 
-    // Demo/offline fallback community volunteers
-    private val fallbackVolunteers = listOf(
-        Volunteer(
-            id = 101,
-            user = VolunteerUser(101, "aarav_s", "Aarav Sharma", "+919876543211", "aarav@example.com"),
-            isVerified = true,
-            isAvailable = true,
-            phoneNumber = "+919876543211",
-            skills = "First Aid Certified • Martial Arts Trainer • Quick Responder",
-            latitude = 18.5230,
-            longitude = 73.8580,
-            address = "Shivajinagar, Pune",
-            totalHelps = 18,
-            rating = 4.95,
-            ratingCount = 18,
-            distanceMeters = 420.0
-        ),
-        Volunteer(
-            id = 102,
-            user = VolunteerUser(102, "meera_j", "Dr. Meera Joshi", "+919876543212", "meera@example.com"),
-            isVerified = true,
-            isAvailable = true,
-            phoneNumber = "+919876543212",
-            skills = "Medical Resident • CPR Certified • Safe Companion",
-            latitude = 18.5290,
-            longitude = 73.8640,
-            address = "FC Road, Pune",
-            totalHelps = 24,
-            rating = 5.0,
-            ratingCount = 24,
-            distanceMeters = 1150.0
-        ),
-        Volunteer(
-            id = 103,
-            user = VolunteerUser(103, "rohan_p", "Rohan Patil", "+919876543213", "rohan@example.com"),
-            isVerified = true,
-            isAvailable = true,
-            phoneNumber = "+919876543213",
-            skills = "Civil Defense Volunteer • 24x7 Night Escort",
-            latitude = 18.5350,
-            longitude = 73.8710,
-            address = "Pune Station Camp",
-            totalHelps = 9,
-            rating = 4.88,
-            ratingCount = 9,
-            distanceMeters = 2400.0
-        )
-    )
+    // Only real registered volunteers from the server
+    private val fallbackVolunteers = emptyList<Volunteer>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -211,27 +165,19 @@ class VolunteerNetworkActivity : AppCompatActivity() {
                             layoutEmpty.visibility = View.GONE
                             adapter.updateList(list)
                         } else {
-                            // Show fallbacks filtered by radius
-                            val filteredFallbacks = fallbackVolunteers.filter { (it.distanceMeters ?: 0.0) <= currentRadius }
-                            if (filteredFallbacks.isNotEmpty()) {
-                                layoutEmpty.visibility = View.GONE
-                                adapter.updateList(filteredFallbacks)
-                            } else {
-                                layoutEmpty.visibility = View.VISIBLE
-                                adapter.updateList(emptyList())
-                            }
+                            layoutEmpty.visibility = View.VISIBLE
+                            adapter.updateList(emptyList())
                         }
                     } else {
-                        // Offline fallback
-                        val filteredFallbacks = fallbackVolunteers.filter { (it.distanceMeters ?: 0.0) <= currentRadius }
-                        adapter.updateList(filteredFallbacks)
+                        layoutEmpty.visibility = View.VISIBLE
+                        adapter.updateList(emptyList())
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     progressBar.visibility = View.GONE
-                    val filteredFallbacks = fallbackVolunteers.filter { (it.distanceMeters ?: 0.0) <= currentRadius }
-                    adapter.updateList(filteredFallbacks)
+                    layoutEmpty.visibility = View.VISIBLE
+                    adapter.updateList(emptyList())
                 }
             }
         }

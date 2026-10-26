@@ -162,15 +162,13 @@ class GuardianDashboardActivity : AppCompatActivity() {
                         updateAlertsUI(alerts)
                     } else {
                         // Demo fallback with active test incident
-                        val mock = getMockActiveAlerts()
-                        updateAlertsUI(mock)
+                        updateAlertsUI(emptyList())
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     binding.swipeRefresh.isRefreshing = false
-                    val mock = getMockActiveAlerts()
-                    updateAlertsUI(mock)
+                    updateAlertsUI(emptyList())
                 }
             }
         }
@@ -272,24 +270,6 @@ class GuardianDashboardActivity : AppCompatActivity() {
     }
 
     private fun getMockActiveAlerts(): List<GuardianActiveAlertItem> {
-        return listOf(
-            GuardianActiveAlertItem(
-                id = 101,
-                userName = "Priya Sharma (Ward)",
-                phone = "+91 98765 43210",
-                emergencyType = "Harassment / Stalking",
-                category = "harassment",
-                status = "open",
-                escalationTier = 1,
-                latitude = 18.5204,
-                longitude = 73.8567,
-                address = "FC Road, Near Deccan Gymkhana, Pune",
-                googleMapsUrl = "https://maps.google.com/?q=18.5204,73.8567",
-                timeSinceSos = "1m 35s ago",
-                elapsedSeconds = 95,
-                batteryLevel = 84,
-                createdAt = "2026-10-02T22:30:00Z"
-            )
-        )
+        return emptyList()
     }
 }

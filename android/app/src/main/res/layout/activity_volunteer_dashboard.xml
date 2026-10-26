@@ -190,7 +190,7 @@
                             android:id="@+id/tvActiveMissionVictim"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Assisting: Priya Sharma (420m away)"
+                            android:text="Assisting: Distress User"
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -200,7 +200,7 @@
                             android:id="@+id/tvActiveMissionLocation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="📍 Green Valley Society, Block B, Flat 302"
+                            android:text="📍 Coordinates Logged"
                             android:textColor="@color/text_secondary"
                             android:textSize="12sp"
                             android:layout_marginTop="2dp" />
@@ -575,14 +575,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Priya Sharma (Distress User)"
+                                android:text="Distress User"
                                 android:textColor="@color/neon_pink"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Please hurry! Someone is following me near the society gate."
+                                android:text="Active distress incident broadcast."
                                 android:textColor="@color/white"
                                 android:textSize="13sp"
                                 android:layout_marginTop="2dp" />

@@ -85,21 +85,14 @@ class ConversationListActivity : AppCompatActivity() {
 
                 if (response.isSuccessful && response.body() != null) {
                     val list = response.body()!!
-                    if (list.isEmpty()) {
-                        // Check if we should show mock demo list if brand new DB
-                        showDemoOrEmpty(emptyList())
-                    } else {
-                        binding.llEmptyState.visibility = View.GONE
-                        binding.rvConversations.visibility = View.VISIBLE
-                        adapter.submitList(list)
-                    }
+                    showDemoOrEmpty(list)
                 } else {
-                    showDemoOrEmpty(getDemoConversations())
+                    showDemoOrEmpty(emptyList())
                 }
             } catch (e: Exception) {
                 binding.progressBar.visibility = View.GONE
                 binding.swipeRefresh.isRefreshing = false
-                showDemoOrEmpty(getDemoConversations())
+                showDemoOrEmpty(emptyList())
             }
         }
     }
@@ -115,69 +108,5 @@ class ConversationListActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDemoConversations(): List<ConversationResponse> {
-        val guardian = UserResponse(
-            id = 2,
-            username = "guardian_mom",
-            email = "mom@example.com",
-            phoneNumber = "+91 98765 43210",
-            firstName = "Mom",
-            lastName = "Guardian",
-            role = "guardian",
-            roleDisplay = "Parent / Guardian",
-            profilePhoto = null,
-            isVerified = true,
-            profile = null
-        )
-        val responder = UserResponse(
-            id = 3,
-            username = "responder_raj",
-            email = "raj@safety.org",
-            phoneNumber = "+91 91234 56789",
-            firstName = "Raj",
-            lastName = "Volunteer Responder",
-            role = "volunteer",
-            roleDisplay = "Volunteer",
-            profilePhoto = null,
-            isVerified = true,
-            profile = null
-        )
-
-        return listOf(
-            ConversationResponse(
-                id = 1,
-                participants = listOf(guardian),
-                lastMessage = MessageResponse(
-                    id = 101,
-                    conversation = 1,
-                    sender = guardian,
-                    content = "Okay beta, be careful. We're on our way.",
-                    messageType = "text",
-                    timestamp = "2026-10-01T00:30:00Z",
-                    isRead = false,
-                    isMe = false
-                ),
-                unreadCount = 1,
-                createdAt = "2026-10-01T00:00:00Z",
-                updatedAt = "2026-10-01T00:30:00Z"
-            ),
-            ConversationResponse(
-                id = 2,
-                participants = listOf(responder),
-                lastMessage = MessageResponse(
-                    id = 102,
-                    conversation = 2,
-                    sender = responder,
-                    content = "📍 Shared location near Metro Station Gate 2",
-                    messageType = "location",
-                    timestamp = "2026-10-01T00:25:00Z",
-                    isRead = true,
-                    isMe = false
-                ),
-                unreadCount = 0,
-                createdAt = "2026-10-01T00:00:00Z",
-                updatedAt = "2026-10-01T00:25:00Z"
-            )
-        )
-    }
+    private fun getDemoConversations(): List<ConversationResponse> = emptyList()
 }
