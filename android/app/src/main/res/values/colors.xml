@@ -45,6 +45,7 @@
     <color name="text_secondary">#8F9BB3</color>
     <color name="text_muted">#5D6882</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
     <!-- Navigation -->
     <color name="nav_background">#0A0E21</color>

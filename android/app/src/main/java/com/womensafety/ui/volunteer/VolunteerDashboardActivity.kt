@@ -11,12 +11,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.womensafety.R
 import com.womensafety.data.api.ApiClient
 import com.womensafety.databinding.ActivityVolunteerDashboardBinding
 import com.womensafety.ui.MainActivity
 import com.womensafety.ui.auth.LoginActivity
+import com.womensafety.ui.profile.ProfileActivity
 import com.womensafety.utils.SharedPrefManager
 import kotlinx.coroutines.launch
 
@@ -43,6 +45,7 @@ class VolunteerDashboardActivity : AppCompatActivity() {
     private var activeMission: NearbySosItem? = null
 
     private val nearbyRequests = mutableListOf<NearbySosItem>()
+    private var currentVolunteerSkills: String = "First Aid & CPR Certified, Self Defense Trained, Safe Escort Responder"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +66,41 @@ class VolunteerDashboardActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        setupHeader()
+        fetchVolunteerProfile()
         updateActiveMissionCard()
     }
 
     private fun setupHeader() {
-        val name = prefs.getUserName().takeIf { !it.isNullOrBlank() } ?: "Hero Volunteer"
-        binding.tvVolGreeting.text = name.replaceFirstChar { it.uppercase() }
-        binding.tvProfileName.text = name.replaceFirstChar { it.uppercase() }
+        val fullName = prefs.getUserFullName()
+        val username = prefs.getUserName()
+        val name = when {
+            !fullName.isNullOrBlank() -> fullName
+            !username.isNullOrBlank() -> username
+            else -> "Hero Volunteer"
+        }
+        val capitalized = name.replaceFirstChar { it.uppercase() }
+        binding.tvVolGreeting.text = capitalized
+        binding.tvProfileName.text = capitalized
+
+        val email = prefs.getUserEmail() ?: ""
+        val phone = prefs.getUserPhone() ?: ""
+        val contactDetails = listOf(phone, email).filter { it.isNotBlank() }.joinToString(" • ")
+        if (contactDetails.isNotBlank()) {
+            binding.tvProfileContact.text = contactDetails
+            binding.tvProfileContact.visibility = View.VISIBLE
+        } else {
+            binding.tvProfileContact.visibility = View.GONE
+        }
+
+        val photoUrl = prefs.getUserPhoto()
+        if (!photoUrl.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(photoUrl)
+                .placeholder(R.drawable.ic_role_volunteer)
+                .circleCrop()
+                .into(binding.ivVolunteerAvatar)
+        }
     }
 
     private fun setupDutyToggle() {
@@ -440,6 +471,29 @@ class VolunteerDashboardActivity : AppCompatActivity() {
             startActivity(Intent(Intent.ACTION_VIEW, uri))
         }
 
+        // Edit Personal Profile (Matches user and guardian)
+        binding.btnEditVolunteerProfile.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+        binding.flAvatarContainer.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+
+        // Edit Certified Capabilities & Skills
+        binding.btnEditSkills.setOnClickListener {
+            showEditSkillsDialog()
+        }
+
+        // Edit Patrol Radius
+        binding.btnEditPatrolRadius.setOnClickListener {
+            showEditPatrolRadiusDialog()
+        }
+
+        // Edit Base Operating Station / Address
+        binding.btnEditBaseAddress.setOnClickListener {
+            showEditBaseAddressDialog()
+        }
+
         // Switch to personal user mode
         binding.btnProfileSwitchUserView.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java).apply {
@@ -466,6 +520,130 @@ class VolunteerDashboardActivity : AppCompatActivity() {
         }
     }
 
+    private fun showEditSkillsDialog() {
+        val availableSkills = arrayOf(
+            "First Aid & CPR Certified",
+            "Self Defense Trained Responder",
+            "Safe Escort & Night Patrol",
+            "Disaster Management & Relief",
+            "Crisis Counseling & Trauma Support",
+            "Verified Police Department ID Card"
+        )
+        val checkedItems = BooleanArray(availableSkills.size) { i ->
+            currentVolunteerSkills.contains(availableSkills[i], ignoreCase = true)
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Certified Capabilities & Skills")
+            .setMultiChoiceItems(availableSkills, checkedItems) { _, which, isChecked ->
+                checkedItems[which] = isChecked
+            }
+            .setPositiveButton("Save") { _, _ ->
+                val selected = mutableListOf<String>()
+                for (i in availableSkills.indices) {
+                    if (checkedItems[i]) selected.add(availableSkills[i])
+                }
+                val newSkills = if (selected.isEmpty()) "Standard Volunteer Responder" else selected.joinToString(", ")
+                currentVolunteerSkills = newSkills
+                binding.tvVolunteerSkillsList.text = formatSkillsText(newSkills)
+                saveVolunteerSkillsToBackend(newSkills)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun formatSkillsText(skills: String): String {
+        val list = skills.split(",", ";").map { it.trim() }.filter { it.isNotEmpty() }
+        if (list.isEmpty()) {
+            return "✔ First Aid & CPR Certified\n✔ Self Defense Responder\n✔ Verified Community Partner"
+        }
+        return list.joinToString("\n") { "✔ $it" }
+    }
+
+    private fun saveVolunteerSkillsToBackend(skills: String) {
+        lifecycleScope.launch {
+            try {
+                val response = ApiClient.getService(this@VolunteerDashboardActivity).updateVolunteerProfile(
+                    mapOf("skills" to skills)
+                )
+                if (response.isSuccessful) {
+                    Toast.makeText(this@VolunteerDashboardActivity, "Capabilities updated successfully!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@VolunteerDashboardActivity, "Capabilities saved locally.", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@VolunteerDashboardActivity, "Capabilities saved locally.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun showEditPatrolRadiusDialog() {
+        val radiusOptions = arrayOf(
+            "2.0 km (Hyper-local walking radius)",
+            "5.0 km (Standard - Recommended)",
+            "10.0 km (City Wide - Bike / Vehicle)",
+            "20.0 km (Regional Alert Range)"
+        )
+        val currentText = binding.tvPatrolRadiusValue.text.toString()
+        val defaultIdx = when {
+            currentText.contains("2.0") -> 0
+            currentText.contains("10.0") -> 2
+            currentText.contains("20.0") -> 3
+            else -> 1
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Select Patrol Radar Radius")
+            .setSingleChoiceItems(radiusOptions, defaultIdx) { dialog, which ->
+                val chosen = when (which) {
+                    0 -> "2.0 km"
+                    2 -> "10.0 km"
+                    3 -> "20.0 km"
+                    else -> "5.0 km"
+                }
+                binding.tvPatrolRadiusValue.text = chosen
+                Toast.makeText(this, "Patrol radius set to $chosen", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun showEditBaseAddressDialog() {
+        val input = android.widget.EditText(this).apply {
+            hint = "e.g. Shivaji Nagar, Pune"
+            setText(binding.tvBaseAddressValue.text)
+            setSelection(text.length)
+            setTextColor(getColor(R.color.white))
+            setHintTextColor(getColor(R.color.text_muted))
+        }
+        val container = android.widget.FrameLayout(this).apply {
+            setPadding(50, 24, 50, 0)
+            addView(input)
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Base Station / Neighborhood")
+            .setMessage("Set your volunteer dispatch location or neighborhood:")
+            .setView(container)
+            .setPositiveButton("Save") { _, _ ->
+                val newAddr = input.text.toString().trim()
+                if (newAddr.isNotEmpty()) {
+                    binding.tvBaseAddressValue.text = newAddr
+                    lifecycleScope.launch {
+                        try {
+                            ApiClient.getService(this@VolunteerDashboardActivity).updateVolunteerProfile(
+                                mapOf("address" to newAddr)
+                            )
+                            Toast.makeText(this@VolunteerDashboardActivity, "Base location updated!", Toast.LENGTH_SHORT).show()
+                        } catch (_: Exception) {}
+                    }
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
     private fun fetchVolunteerProfile() {
         lifecycleScope.launch {
             try {
@@ -474,8 +652,22 @@ class VolunteerDashboardActivity : AppCompatActivity() {
                     val profile = response.body()!!
                     val vol = profile.volunteer
                     if (vol != null) {
+                        vol.skills?.let {
+                            currentVolunteerSkills = it
+                            binding.tvVolunteerSkillsList.text = formatSkillsText(it)
+                        }
+                        if (!vol.address.isNullOrBlank()) {
+                            binding.tvBaseAddressValue.text = vol.address
+                        }
                         binding.tvStatHelps.text = vol.totalHelps.toString()
                         binding.tvStatRating.text = "${vol.rating} ★"
+                        val verifiedLabel = if (vol.isVerified) "Verified Community Partner" else "Active Community Responder"
+                        binding.tvProfileBadge.text = "Badge #VOL-${vol.id} · $verifiedLabel"
+
+                        vol.user?.fullName?.takeIf { it.isNotBlank() }?.let { fn ->
+                            binding.tvProfileName.text = fn
+                            binding.tvVolGreeting.text = fn
+                        }
                     }
                 }
             } catch (_: Exception) {}

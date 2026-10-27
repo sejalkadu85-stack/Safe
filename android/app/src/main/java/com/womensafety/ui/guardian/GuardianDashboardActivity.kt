@@ -142,7 +142,7 @@ class GuardianDashboardActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_profile -> {
-                    startActivity(Intent(this, HelplineDirectoryActivity::class.java))
+                    startActivity(Intent(this, com.womensafety.ui.profile.ProfileActivity::class.java))
                     true
                 }
                 else -> false

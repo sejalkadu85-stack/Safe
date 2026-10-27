@@ -715,13 +715,32 @@
                         android:orientation="vertical"
                         android:layout_marginBottom="20dp">
 
-                        <ImageView
-                            android:layout_width="72dp"
-                            android:layout_height="72dp"
-                            android:src="@drawable/ic_role_volunteer"
-                            android:background="@drawable/bg_dot_active"
-                            android:padding="8dp"
-                            android:contentDescription="Avatar" />
+                        <FrameLayout
+                            android:id="@+id/flAvatarContainer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true">
+
+                            <ImageView
+                                android:id="@+id/ivVolunteerAvatar"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/ic_role_volunteer"
+                                android:background="@drawable/bg_dot_active"
+                                android:padding="8dp"
+                                android:contentDescription="Avatar" />
+
+                            <ImageView
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="bottom|end"
+                                android:background="@drawable/bg_dark_card"
+                                android:src="@drawable/ic_edit"
+                                android:padding="5dp"
+                                app:tint="@color/neon_cyan"
+                                android:contentDescription="Edit Photo" />
+                        </FrameLayout>
 
                         <TextView
                             android:id="@+id/tvProfileName"
@@ -734,25 +753,70 @@
                             android:layout_marginTop="10dp" />
 
                         <TextView
+                            android:id="@+id/tvProfileBadge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Badge #VOL-8492 · Verified Police Partner"
+                            android:text="Badge #VOL-8492 · Verified Community Partner"
                             android:textColor="@color/neon_cyan"
-                            android:textSize="11sp"
+                            android:textSize="12sp"
                             android:layout_marginTop="2dp" />
+
+                        <TextView
+                            android:id="@+id/tvProfileContact"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/text_muted"
+                            android:textSize="12sp"
+                            android:layout_marginTop="4dp"
+                            android:visibility="gone" />
+
+                        <!-- Edit Personal Profile Button (Full User/Guardian Parity) -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnEditVolunteerProfile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="14dp"
+                            android:text="✏️ Edit Personal Profile"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:backgroundTint="@color/neon_cyan"
+                            app:cornerRadius="20dp" />
                     </LinearLayout>
 
-                    <!-- Skills & Credentials -->
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <!-- Skills & Credentials Header with Edit action -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="CERTIFIED CAPABILITIES"
-                        android:textColor="@color/text_muted"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="CERTIFIED CAPABILITIES &amp; SKILLS"
+                            android:textColor="@color/text_muted"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/btnEditSkills"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Edit Skills ✎"
+                            android:textColor="@color/neon_cyan"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:padding="6dp"
+                            android:clickable="true"
+                            android:focusable="true" />
+                    </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llCapabilitiesContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_dark_card"
@@ -761,25 +825,13 @@
                         android:layout_marginBottom="20dp">
 
                         <TextView
+                            android:id="@+id/tvVolunteerSkillsList"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="✔ First Aid &amp; CPR Certified (Red Cross)"
+                            android:text="✔ First Aid &amp; CPR Certified\n✔ Self Defense Responder\n✔ Verified Community Partner"
                             android:textColor="@color/white"
                             android:textSize="13sp"
-                            android:layout_marginBottom="6dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="✔ Self Defense Trained Responder"
-                            android:textColor="@color/white"
-                            android:textSize="13sp"
-                            android:layout_marginBottom="6dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="✔ Verified Police Department ID Card"
-                            android:textColor="@color/white"
-                            android:textSize="13sp" />
+                            android:lineSpacingExtra="4dp" />
                     </LinearLayout>
 
                     <!-- Settings List -->
@@ -801,10 +853,13 @@
 
                         <!-- Patrol Radius -->
                         <LinearLayout
+                            android:id="@+id/btnEditPatrolRadius"
                             android:layout_width="match_parent"
                             android:layout_height="52dp"
                             android:gravity="center_vertical"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="16dp"
+                            android:clickable="true"
+                            android:focusable="true">
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -813,13 +868,62 @@
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
                             <TextView
+                                android:id="@+id/tvPatrolRadiusValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="5.0 km"
                                 android:textColor="@color/neon_cyan"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" ›"
+                                android:textColor="@color/text_muted"
+                                android:textSize="18sp" />
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#1AFFFFFF" />
+
+                        <!-- Base Address -->
+                        <LinearLayout
+                            android:id="@+id/btnEditBaseAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="16dp"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Base Station / Area"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:id="@+id/tvBaseAddressValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pune, MH"
+                                android:textColor="@color/neon_cyan"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" ›"
+                                android:textColor="@color/text_muted"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#1AFFFFFF" />
 
                         <!-- Switch to Standard User View -->
                         <LinearLayout
