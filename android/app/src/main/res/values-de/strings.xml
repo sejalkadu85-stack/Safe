@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SafeHer</string>
+    <string name="tagline">Ihre Sicherheit ist unsere Priorität</string>
+    <string name="sub_tagline">KI-gestütztes Sicherheitssystem für Frauen mit Notfallerkennung in Echtzeit und Community-Hilfe</string>
+    <string name="get_started">Jetzt Starten</string>
+    <string name="login">Anmelden</string>
+    <string name="sign_up">Registrieren</string>
+    <string name="welcome_back">Willkommen zurück</string>
+    <string name="login_to_continue">Melden Sie sich an, um fortzufahren</string>
+    <string name="who_are_you">Wer sind Sie?</string>
+    <string name="select_role">Wählen Sie Ihre Rolle aus</string>
+
+    <!-- Roles -->
+    <string name="role_user">Benutzerin</string>
+    <string name="role_guardian">Vormund / Schutzperson</string>
+    <string name="role_volunteer">Freiwillige Helfer</string>
+    <string name="role_admin">Administrator-Leitstelle</string>
+
+    <!-- SOS & Emergency -->
+    <string name="emergency_sos">Notfall SOS</string>
+    <string name="tap_sos">Tippen, um Alarm an Notfallkontakte zu senden</string>
+    <string name="sos_sent">SOS-Alarm wurde versendet!</string>
+    <string name="cancel_sos">SOS Abbrechen</string>
+    <string name="hold_to_cancel">Gedrückt halten, um Fehlalarm abzubrechen</string>
+    <string name="silent_sos">Stiller SOS-Alarm</string>
+    <string name="sos_countdown">Notfallmeldung wird gesendet in:</string>
+
+    <!-- Navigation & Tabs -->
+    <string name="nav_home">Startseite</string>
+    <string name="nav_alerts">Meldungen</string>
+    <string name="nav_map">Karte</string>
+    <string name="nav_community">Community</string>
+    <string name="nav_profile">Profil</string>
+    <string name="nav_chat">Chat</string>
+    <string name="nav_incidents">Vorfälle</string>
+
+    <!-- Safety Tools -->
+    <string name="fake_call">Täuschungsanruf</string>
+    <string name="stealth_mode">Tarnungsmodus (Rechner)</string>
+    <string name="live_tracking">Live-Standortverfolgung</string>
+    <string name="danger_zones">Gefahrenzonen</string>
+    <string name="helpline_directory">Notrufnummern</string>
+    <string name="trusted_contacts">Notfallkontakte</string>
+    <string name="ai_monitor">KI-Sicherheitsmonitor</string>
+
+    <!-- Guardian Dashboard -->
+    <string name="guardian_dashboard">Schutzpersonen-Hub</string>
+    <string name="live_monitoring">Live-Standortüberwachung</string>
+    <string name="active_alerts">Aktive Notfallalarme</string>
+    <string name="battery_level">Akkustand</string>
+    <string name="call_ward">Anrufen</string>
+    <string name="navigate_to_ward">Route berechnen</string>
+
+    <!-- Volunteer Dashboard -->
+    <string name="volunteer_dashboard">Helfer-Einsatzzentrale</string>
+    <string name="duty_online">AKTIV (Online)</string>
+    <string name="duty_offline">OFFLINE</string>
+    <string name="patrol_radius">Einsatzradius</string>
+    <string name="accept_mission">Einsatz annehmen</string>
+    <string name="certified_capabilities">Zertifizierte Fähigkeiten</string>
+    <string name="edit_capabilities">Fähigkeiten bearbeiten</string>
+    <string name="base_station">Einsatzbereich</string>
+    <string name="switch_user_mode">Zu persönlichem SOS wechseln</string>
+
+    <!-- Admin Dashboard -->
+    <string name="admin_command_center">Leitstelle / Verwaltung</string>
+    <string name="total_users">Registrierte Benutzer</string>
+    <string name="active_incidents">Aktive Notfälle</string>
+    <string name="resolved_incidents">Gelöste Fälle</string>
+    <string name="export_csv">CSV-Bericht herunterladen</string>
+    <string name="export_excel">Excel-Bericht herunterladen</string>
+
+    <!-- Profile & Settings -->
+    <string name="edit_profile">Persönliches Profil bearbeiten</string>
+    <string name="full_name">Vollständiger Name</string>
+    <string name="phone_number">Telefonnummer</string>
+    <string name="email_address">E-Mail-Adresse</string>
+    <string name="save_changes">Änderungen speichern</string>
+    <string name="logout">Abmelden</string>
+    <string name="language">Sprache</string>
+    <string name="select_language">Sprache wählen</string>
+    <string name="language_changed">Sprache erfolgreich auf Deutsch geändert</string>
+</resources>

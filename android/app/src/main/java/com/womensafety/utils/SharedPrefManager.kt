@@ -96,6 +96,12 @@ class SharedPrefManager private constructor(context: Context) {
     }
     fun getLastAddress(): String? = prefs.getString("last_address", null)
 
+    // Language Selection (en, mr, hi, de)
+    fun saveLanguage(languageCode: String) {
+        prefs.edit().putString("app_language_code", languageCode).apply()
+    }
+    fun getLanguage(): String = prefs.getString("app_language_code", "en") ?: "en"
+
     // Emergency Contacts & Primary Guardian Cache
     fun savePrimaryGuardianPhone(phone: String) {
         prefs.edit().putString("primary_guardian_phone", phone).apply()

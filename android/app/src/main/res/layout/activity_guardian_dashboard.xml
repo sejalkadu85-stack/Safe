@@ -41,7 +41,7 @@
             android:layout_marginStart="14dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnSwitchUser"
+            app:layout_constraintEnd_toStartOf="@+id/btnGuardianLanguage"
             app:layout_constraintStart_toEndOf="@+id/flShieldIcon"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -85,6 +85,21 @@
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
         </LinearLayout>
+
+        <!-- Language Switcher button -->
+        <ImageView
+            android:id="@+id/btnGuardianLanguage"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Language"
+            android:padding="8dp"
+            android:src="@drawable/ic_language"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnSwitchUser"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/neon_cyan" />
 
         <!-- Switch to User Mode button -->
         <ImageView

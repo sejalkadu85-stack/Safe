@@ -69,6 +69,10 @@ class AdminDashboardActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnAdminLanguage.setOnClickListener {
+            com.womensafety.utils.LocaleHelper.showLanguageDialog(this)
+        }
+
         // Open Web Admin Console
         binding.btnOpenWebConsole.setOnClickListener {
             openWebConsole()

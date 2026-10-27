@@ -103,6 +103,20 @@
                                 android:textSize="11sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
+
+                        <!-- Language Switcher button -->
+                        <ImageView
+                            android:id="@+id/btnVolLanguage"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_dark_card"
+                            android:padding="7dp"
+                            android:src="@drawable/ic_language"
+                            app:tint="@color/neon_cyan"
+                            android:contentDescription="Language"
+                            android:clickable="true"
+                            android:focusable="true" />
                     </LinearLayout>
 
                     <!-- Active Radar Status Card -->

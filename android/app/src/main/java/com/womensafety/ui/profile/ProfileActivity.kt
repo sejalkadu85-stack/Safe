@@ -186,6 +186,13 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, TrustedContactsActivity::class.java))
         }
 
+        updateLanguageLabel(com.womensafety.utils.LocaleHelper.getLanguage(this))
+        binding.btnLanguageSettings.setOnClickListener {
+            com.womensafety.utils.LocaleHelper.showLanguageDialog(this) { chosenCode ->
+                updateLanguageLabel(chosenCode)
+            }
+        }
+
         binding.btnFaq.setOnClickListener {
             showFaqDialog()
         }
@@ -416,6 +423,15 @@ class ProfileActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
+        }
+    }
+
+    private fun updateLanguageLabel(code: String) {
+        binding.tvCurrentLanguage.text = when (code) {
+            com.womensafety.utils.LocaleHelper.LANG_MR -> "मराठी"
+            com.womensafety.utils.LocaleHelper.LANG_HI -> "हिन्दी"
+            com.womensafety.utils.LocaleHelper.LANG_DE -> "Deutsch"
+            else -> "English"
         }
     }
 }

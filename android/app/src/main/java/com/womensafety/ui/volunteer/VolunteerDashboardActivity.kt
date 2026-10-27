@@ -460,6 +460,11 @@ class VolunteerDashboardActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        // Language Switcher
+        binding.btnVolLanguage.setOnClickListener {
+            com.womensafety.utils.LocaleHelper.showLanguageDialog(this)
+        }
+
         // Resume active mission from Home tab
         binding.btnResumeActiveMission.setOnClickListener {
             activeMission?.let { acceptSosIncident(it) }

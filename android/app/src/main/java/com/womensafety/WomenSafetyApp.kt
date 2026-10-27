@@ -1,6 +1,7 @@
 package com.womensafety
 
 import android.app.Application
+import com.womensafety.utils.LocaleHelper
 import com.womensafety.utils.SharedPrefManager
 
 class WomenSafetyApp : Application() {
@@ -9,5 +10,6 @@ class WomenSafetyApp : Application() {
         super.onCreate()
         // Initialize global singletons
         SharedPrefManager.getInstance(this)
+        LocaleHelper.applyLocale(this)
     }
 }

@@ -129,6 +129,10 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        binding.btnLanguageSwitch.setOnClickListener {
+            com.womensafety.utils.LocaleHelper.showLanguageDialog(this)
+        }
+
         binding.btnNotifications.setOnClickListener {
             startActivity(Intent(this, AlertHistoryActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

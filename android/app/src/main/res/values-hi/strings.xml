@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SafeHer</string>
+    <string name="tagline">आपकी सुरक्षा हमारी प्राथमिकता</string>
+    <string name="sub_tagline">रीयल-टाइम आपातकालीन पहचान और सामुदायिक सहायता के साथ AI-संचालित महिला सुरक्षा प्रणाली</string>
+    <string name="get_started">शुरू करें</string>
+    <string name="login">लॉग इन करें</string>
+    <string name="sign_up">साइन अप करें</string>
+    <string name="welcome_back">वापसी पर स्वागत है</string>
+    <string name="login_to_continue">जारी रखने के लिए लॉग इन करें</string>
+    <string name="who_are_you">अपनी भूमिका चुनें</string>
+    <string name="select_role">जारी रखने के लिए भूमिका का चयन करें</string>
+
+    <!-- Roles -->
+    <string name="role_user">महिला उपयोगकर्ता</string>
+    <string name="role_guardian">अभिभावक (गार्जियन)</string>
+    <string name="role_volunteer">समुदाय स्वयंसेवक</string>
+    <string name="role_admin">प्रशासक कमांड सेंटर</string>
+
+    <!-- SOS & Emergency -->
+    <string name="emergency_sos">आपातकालीन SOS</string>
+    <string name="tap_sos">विश्वसनीय संपर्कों को तुरंत अलर्ट भेजें</string>
+    <string name="sos_sent">SOS अलर्ट भेज दिया गया है!</string>
+    <string name="cancel_sos">SOS रद्द करें</string>
+    <string name="hold_to_cancel">गलत अलार्म रद्द करने के लिए दबाकर रखें</string>
+    <string name="silent_sos">गुप्त (साइलेंट) SOS</string>
+    <string name="sos_countdown">आपातकालीन संदेश भेजा जा रहा है:</string>
+
+    <!-- Navigation & Tabs -->
+    <string name="nav_home">होम</string>
+    <string name="nav_alerts">अलर्ट</string>
+    <string name="nav_map">मानचित्र</string>
+    <string name="nav_community">समुदाय</string>
+    <string name="nav_profile">प्रोफ़ाइल</string>
+    <string name="nav_chat">बातचीत (चैट)</string>
+    <string name="nav_incidents">घटनाएं</string>
+
+    <!-- Safety Tools -->
+    <string name="fake_call">फ़र्ज़ी इनकमिंग कॉल</string>
+    <string name="stealth_mode">गुप्त कैलकुलेटर मोड</string>
+    <string name="live_tracking">लाइव लोकेशन ट्रैकिंग</string>
+    <string name="danger_zones">खतरे के क्षेत्र (डेंजर ज़ोन)</string>
+    <string name="helpline_directory">आपातकालीन हेल्पलाइन</string>
+    <string name="trusted_contacts">विश्वसनीय संपर्क</string>
+    <string name="ai_monitor">AI सुरक्षा मॉनिटर</string>
+
+    <!-- Guardian Dashboard -->
+    <string name="guardian_dashboard">अभिभावक सुरक्षा हब</string>
+    <string name="live_monitoring">लाइव लोकेशन निगरानी</string>
+    <string name="active_alerts">सक्रिय आपातकालीन अलर्ट</string>
+    <string name="battery_level">बैटरी प्रतिशत</string>
+    <string name="call_ward">कॉल करें</string>
+    <string name="navigate_to_ward">दिशा-निर्देश प्राप्त करें</string>
+
+    <!-- Volunteer Dashboard -->
+    <string name="volunteer_dashboard">स्वयंसेवक सहायता हब</string>
+    <string name="duty_online">सक्रिय (ऑनलाइन)</string>
+    <string name="duty_offline">ऑफलाइन</string>
+    <string name="patrol_radius">गश्त रडार त्रिज्या</string>
+    <string name="accept_mission">मदद मिशन स्वीकार करें</string>
+    <string name="certified_capabilities">प्रमाणित कौशल और क्षमताएं</string>
+    <string name="edit_capabilities">कौशल संपादित करें</string>
+    <string name="base_station">बेस स्टेशन / क्षेत्र</string>
+    <string name="switch_user_mode">व्यक्तिगत SOS मोड पर जाएं</string>
+
+    <!-- Admin Dashboard -->
+    <string name="admin_command_center">प्रशासक कमांड सेंटर</string>
+    <string name="total_users">कुल पंजीकृत उपयोगकर्ता</string>
+    <string name="active_incidents">सक्रिय आपातकालीन मामले</string>
+    <string name="resolved_incidents">सुलझाए गए मामले</string>
+    <string name="export_csv">CSV रिपोर्ट डाउनलोड करें</string>
+    <string name="export_excel">Excel रिपोर्ट डाउनलोड करें</string>
+
+    <!-- Profile & Settings -->
+    <string name="edit_profile">व्यक्तिगत प्रोफ़ाइल संपादित करें</string>
+    <string name="full_name">पूरा नाम</string>
+    <string name="phone_number">फ़ोन नंबर</string>
+    <string name="email_address">ईमेल पता</string>
+    <string name="save_changes">परिवर्तन सहेजें</string>
+    <string name="logout">लॉग आउट करें</string>
+    <string name="language">भाषा</string>
+    <string name="select_language">भाषा चुनें</string>
+    <string name="language_changed">भाषा सफलतापूर्वक हिन्दी में बदल दी गई है</string>
+</resources>

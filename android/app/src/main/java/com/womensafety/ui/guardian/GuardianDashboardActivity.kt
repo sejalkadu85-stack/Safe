@@ -104,6 +104,10 @@ class GuardianDashboardActivity : AppCompatActivity() {
             loadActiveAlerts()
         }
 
+        binding.btnGuardianLanguage.setOnClickListener {
+            com.womensafety.utils.LocaleHelper.showLanguageDialog(this)
+        }
+
         binding.btnSwitchUser.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java).apply {
                 putExtra("stay_in_user_view", true)

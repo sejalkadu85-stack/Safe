@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Women Safety</string>
+    <string name="app_name">SafeHer</string>
     <string name="tagline">Your Safety Our Priority</string>
     <string name="sub_tagline">AI-Powered Women Safety System with Real-Time Emergency Detection and Community Response</string>
     <string name="get_started">Get Started</string>
@@ -10,6 +10,75 @@
     <string name="login_to_continue">Login to continue your account</string>
     <string name="who_are_you">Who are you?</string>
     <string name="select_role">Select your role to continue</string>
+
+    <!-- Roles -->
+    <string name="role_user">Woman User</string>
+    <string name="role_guardian">Guardian</string>
+    <string name="role_volunteer">Community Volunteer</string>
+    <string name="role_admin">Admin Command Center</string>
+
+    <!-- SOS & Emergency -->
     <string name="emergency_sos">Emergency SOS</string>
     <string name="tap_sos">Tap to send alert to your trusted contacts</string>
+    <string name="sos_sent">SOS Alert Dispatched!</string>
+    <string name="cancel_sos">Cancel SOS</string>
+    <string name="hold_to_cancel">Hold to cancel false alarm</string>
+    <string name="silent_sos">Silent SOS</string>
+    <string name="sos_countdown">Emergency dispatching in</string>
+
+    <!-- Navigation & Tabs -->
+    <string name="nav_home">Home</string>
+    <string name="nav_alerts">Alerts</string>
+    <string name="nav_map">Map</string>
+    <string name="nav_community">Community</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_chat">Chat</string>
+    <string name="nav_incidents">Incidents</string>
+
+    <!-- Safety Tools -->
+    <string name="fake_call">Fake Incoming Call</string>
+    <string name="stealth_mode">Stealth / Disguise Mode</string>
+    <string name="live_tracking">Live Tracking</string>
+    <string name="danger_zones">Danger Zones</string>
+    <string name="helpline_directory">Emergency Helplines</string>
+    <string name="trusted_contacts">Trusted Contacts</string>
+    <string name="ai_monitor">AI Safety Monitor</string>
+
+    <!-- Guardian Dashboard -->
+    <string name="guardian_dashboard">Guardian Safety Hub</string>
+    <string name="live_monitoring">Live Ward Monitoring</string>
+    <string name="active_alerts">Active Emergency Alerts</string>
+    <string name="battery_level">Battery Level</string>
+    <string name="call_ward">Call Ward</string>
+    <string name="navigate_to_ward">Get Directions</string>
+
+    <!-- Volunteer Dashboard -->
+    <string name="volunteer_dashboard">Volunteer Responder Hub</string>
+    <string name="duty_online">ONLINE</string>
+    <string name="duty_offline">OFFLINE</string>
+    <string name="patrol_radius">Patrol Radar Radius</string>
+    <string name="accept_mission">Accept Mission</string>
+    <string name="certified_capabilities">Certified Capabilities &amp; Skills</string>
+    <string name="edit_capabilities">Edit Skills</string>
+    <string name="base_station">Base Station / Area</string>
+    <string name="switch_user_mode">Switch to Personal SOS Mode</string>
+
+    <!-- Admin Dashboard -->
+    <string name="admin_command_center">Admin Command Center</string>
+    <string name="total_users">Total Registered Users</string>
+    <string name="active_incidents">Active Emergencies</string>
+    <string name="resolved_incidents">Resolved Cases</string>
+    <string name="export_csv">Export CSV Report</string>
+    <string name="export_excel">Export Excel Report</string>
+
+    <!-- Profile & Settings -->
+    <string name="edit_profile">Edit Personal Profile</string>
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email_address">Email Address</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="logout">Log Out</string>
+    <string name="language">Language</string>
+    <string name="select_language">Select Language / भाषा निवडा / भाषा चुनें / Sprache wählen</string>
+    <string name="language_changed">Language changed to English</string>
 </resources>

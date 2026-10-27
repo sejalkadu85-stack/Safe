@@ -74,6 +74,20 @@
                     android:paddingHorizontal="10dp"
                     android:layout_marginEnd="6dp" />
 
+                <!-- Language Switcher Icon -->
+                <ImageView
+                    android:id="@+id/btnAdminLanguage"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_dark_card"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_language"
+                    app:tint="@color/neon_cyan"
+                    android:contentDescription="Language"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
                 <!-- Logout Icon -->
                 <ImageButton
                     android:id="@+id/btnAdminLogout"
